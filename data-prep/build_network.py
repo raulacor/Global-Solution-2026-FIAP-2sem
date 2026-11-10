@@ -1,6 +1,7 @@
 import sqlite3
 import struct
 import math
+import json
 
 
 conn = sqlite3.connect("./raw/SIRGAS_GPKG_estacaometro.gpkg")
@@ -73,8 +74,15 @@ def GetStationNeighbors(sortedStations):
 
     return distanceStations
 
-sortedStations = SortStations(allStations)
-print(sortedStations)
 
+
+sortedStations = SortStations(allStations)
 neighbors = GetStationNeighbors(sortedStations)
-print(neighbors)
+
+superStations = {
+    "stations": sortedStations,
+    "neighbors": neighbors
+}
+
+with open("../python/data/network.json", "w", encoding="utf-8") as network:
+    json.dump(superStations, network, ensure_ascii=False, indent=4)

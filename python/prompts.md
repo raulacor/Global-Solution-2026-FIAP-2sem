@@ -58,6 +58,12 @@
 
 **Result:** the repository holds only the source code (Python and web) and the math models; the math models are written in Python.
 
+### 9. Data preparation, guided — 2026-11-09/10
+
+> lets code / check it please (series of review requests while writing `data-prep/build_network.py`)
+
+**Result:** the AI first wrote a data-prep script on its own; Raul pointed out that the code was supposed to be his, so it was deleted and he rewrote it himself. Over two sessions the AI guided him with questions and short explanations (GeoPackage as SQLite, reading the geometry blob with `struct`, UTM coordinates in meters, Pythagoras for distances, `sort(key=...)`, `json.dump` options). On Raul's explicit request, the AI supplied the final sorting lines (sort Line 1 by Y, the others by X). The output is `python/data/network.json`: 93 stations and 87 neighbor distances.
+
 ## Features developed, suggested or modified with AI
 
 | Item | AI's role |
