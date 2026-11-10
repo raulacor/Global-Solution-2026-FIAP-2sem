@@ -1,0 +1,36 @@
+# --- Node / Vite ---
+node_modules/
+dist/
+dist-ssr/
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Cópia gerada dos módulos Python para o Pyodide (ver web/scripts/sync-python.mjs)
+web/public/py/
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# --- Ambiente e segredos ---
+.env
+.env.*
+!.env.example
+.vercel/
+
+# --- Sistema / editores ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# --- Entregas geradas (ZIPs para o Teams) ---
+*.zip
