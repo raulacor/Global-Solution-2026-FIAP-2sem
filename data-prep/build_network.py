@@ -1,12 +1,15 @@
 import sqlite3
 import struct
 import math
+import json
 
-
-coordStations = []
 
 conn = sqlite3.connect("./raw/SIRGAS_GPKG_estacaometro.gpkg")
 cur = conn.cursor()
+
+stations = cur.execute("SELECT * FROM SIRGAS_GPKG_estacaometro")
+allStations = cur.fetchall()
+
 
 def Pythagoras(x1, x2, y1, y2):
     xSide = x1 - x2
@@ -16,20 +19,70 @@ def Pythagoras(x1, x2, y1, y2):
     return hypotenuse
 
 
-stations = cur.execute("SELECT * FROM SIRGAS_GPKG_estacaometro")
-allStations = cur.fetchall()
+def SortStations(allStations):
+    sortedStations = {
+        "AMARELA": [],
+        "AZUL": [],
+        "LILAS": [],
+        "PRATA": [], 
+        "VERDE": [],
+        "VERMELHA": []
+    }
+    for s in range(len(allStations)):
+        stationName = allStations[s][2]
+        stationLine = allStations[s][3]
+        coordX = struct.unpack("<d", allStations[s][1][-16:-8])[0]
+        coordY = struct.unpack("<d", allStations[s][1][-8:])[0]
 
-for s in range(len(allStations)):
-    coordX = struct.unpack("<d", allStations[s][1][-16:-8])[0]
-    coordY = struct.unpack("<d", allStations[s][1][-8:])[0]
-    stationName = allStations[s][2]
-    stationLine = allStations[s][3]
+        if stationName not in [s["name"] for s in sortedStations[stationLine]]: ## Duplicate stations checker.
+            sortedStations[stationLine].append({
+                "name": stationName,
+                "line": stationLine,
+                "x": coordX,
+                "y": coordY,           
+            })
 
-    coordStations.append({
-        "name": stationName,
-        "line": stationLine,
-        "x": coordX,
-        "y": coordY,
-        })
-print(Pythagoras(coordStations[0]['x'], coordStations[1]['x'], coordStations[0]['y'], coordStations[1]['y'],))
+    for line in sortedStations:
+        if line == "AZUL":
+            sortedStations[line].sort(key=lambda s: s["y"], reverse=True)
+        else:
+            sortedStations[line].sort(key=lambda s: s["x"])
 
+    return sortedStations
+
+def GetStationNeighbors(sortedStations):
+    distanceStations = {
+        "AMARELA": [],
+        "AZUL": [],
+        "LILAS": [],
+        "PRATA": [], 
+        "VERDE": [],
+        "VERMELHA": []
+    }
+    for line in sortedStations:
+        for i in range(len(sortedStations[line]) - 1):
+            distance = Pythagoras(x1=sortedStations[line][i]["x"], x2=sortedStations[line][i+1]["x"], y1=sortedStations[line][i]["y"], y2=sortedStations[line][i+1]["y"])
+
+            nameStation = sortedStations[line][i]["name"]
+            nameNextStation = sortedStations[line][i+1]["name"]
+
+            distanceStations[line].append({
+                "station": nameStation,
+                "next_station": nameNextStation,
+                "distance_between": distance
+            })
+
+    return distanceStations
+
+
+
+sortedStations = SortStations(allStations)
+neighbors = GetStationNeighbors(sortedStations)
+
+superStations = {
+    "stations": sortedStations,
+    "neighbors": neighbors
+}
+
+with open("../python/data/network.json", "w", encoding="utf-8") as network:
+    json.dump(superStations, network, ensure_ascii=False, indent=4)

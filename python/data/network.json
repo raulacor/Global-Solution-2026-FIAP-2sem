@@ -1,0 +1,1023 @@
+{
+    "stations": {
+        "AMARELA": [
+            {
+                "name": "VILA SÔNIA",
+                "line": "AMARELA",
+                "x": 322987.532455987,
+                "y": 7389713.836294344
+            },
+            {
+                "name": "SÃO PAULO-MORUMBI",
+                "line": "AMARELA",
+                "x": 324093.4074848638,
+                "y": 7390505.686565061
+            },
+            {
+                "name": "BUTANTÃ",
+                "line": "AMARELA",
+                "x": 325665.6320395882,
+                "y": 7392119.001959706
+            },
+            {
+                "name": "PINHEIROS",
+                "line": "AMARELA",
+                "x": 326327.2957216949,
+                "y": 7392659.555941153
+            },
+            {
+                "name": "FARIA LIMA",
+                "line": "AMARELA",
+                "x": 327114.0471004122,
+                "y": 7392671.675924914
+            },
+            {
+                "name": "FRADIQUE COUTINHO",
+                "line": "AMARELA",
+                "x": 328115.4742602567,
+                "y": 7392793.0862012375
+            },
+            {
+                "name": "OSCAR FREIRE",
+                "line": "AMARELA",
+                "x": 329341.4144534321,
+                "y": 7393433.263144039
+            },
+            {
+                "name": "PAULISTA",
+                "line": "AMARELA",
+                "x": 330344.7532294784,
+                "y": 7394047.69536134
+            },
+            {
+                "name": "HIGIENÓPOLIS-MACKENZIE",
+                "line": "AMARELA",
+                "x": 331350.1696450549,
+                "y": 7394737.614968473
+            },
+            {
+                "name": "REPÚBLICA",
+                "line": "AMARELA",
+                "x": 332287.5571282633,
+                "y": 7395232.308249094
+            },
+            {
+                "name": "LUZ",
+                "line": "AMARELA",
+                "x": 333148.13787931344,
+                "y": 7396175.502082352
+            }
+        ],
+        "AZUL": [
+            {
+                "name": "TUCURUVI",
+                "line": "AZUL",
+                "x": 336278.64209541294,
+                "y": 7402432.165674833
+            },
+            {
+                "name": "PARADA INGLESA",
+                "line": "AZUL",
+                "x": 335708.19390873564,
+                "y": 7401644.758256197
+            },
+            {
+                "name": "AYRTON SENNA-JARDIM SÃO PAULO",
+                "line": "AZUL",
+                "x": 334868.31778528204,
+                "y": 7401039.063829554
+            },
+            {
+                "name": "SANTANA",
+                "line": "AZUL",
+                "x": 334098.34623333125,
+                "y": 7399905.987789704
+            },
+            {
+                "name": "CARANDIRU",
+                "line": "AZUL",
+                "x": 334087.37400837534,
+                "y": 7399163.08702139
+            },
+            {
+                "name": "PORTUGUESA-TIETÊ",
+                "line": "AZUL",
+                "x": 334075.67379692127,
+                "y": 7398403.671989027
+            },
+            {
+                "name": "ARMÊNIA",
+                "line": "AZUL",
+                "x": 333660.75738355645,
+                "y": 7397361.35926249
+            },
+            {
+                "name": "TIRADENTES",
+                "line": "AZUL",
+                "x": 333378.10677540285,
+                "y": 7396786.884356748
+            },
+            {
+                "name": "LUZ",
+                "line": "AZUL",
+                "x": 333232.95855868945,
+                "y": 7396093.673843038
+            },
+            {
+                "name": "SÃO BENTO",
+                "line": "AZUL",
+                "x": 333191.33408739726,
+                "y": 7395297.792625714
+            },
+            {
+                "name": "SÉ",
+                "line": "AZUL",
+                "x": 333310.17304053425,
+                "y": 7394533.150332816
+            },
+            {
+                "name": "JAPÃO-LIBERDADE",
+                "line": "AZUL",
+                "x": 333045.1057196184,
+                "y": 7394089.781055858
+            },
+            {
+                "name": "SÃO JOAQUIM",
+                "line": "AZUL",
+                "x": 332751.4252232264,
+                "y": 7393318.389260499
+            },
+            {
+                "name": "VERGUEIRO",
+                "line": "AZUL",
+                "x": 332633.70168738125,
+                "y": 7392541.370069396
+            },
+            {
+                "name": "PARAÍSO",
+                "line": "AZUL",
+                "x": 332556.90256449,
+                "y": 7391786.309476363
+            },
+            {
+                "name": "ANA ROSA",
+                "line": "AZUL",
+                "x": 332800.8836382389,
+                "y": 7391176.321796013
+            },
+            {
+                "name": "VILA MARIANA",
+                "line": "AZUL",
+                "x": 333198.7874619091,
+                "y": 7390311.404781474
+            },
+            {
+                "name": "SANTA CRUZ",
+                "line": "AZUL",
+                "x": 333003.179514583,
+                "y": 7389232.443278197
+            },
+            {
+                "name": "PRAÇA DA ÁRVORE",
+                "line": "AZUL",
+                "x": 332896.14739159064,
+                "y": 7387922.944798081
+            },
+            {
+                "name": "SAÚDE",
+                "line": "AZUL",
+                "x": 332768.1359020663,
+                "y": 7387039.087999324
+            },
+            {
+                "name": "SÃO JUDAS",
+                "line": "AZUL",
+                "x": 332616.5798382843,
+                "y": 7386246.280258754
+            },
+            {
+                "name": "CONCEIÇÃO",
+                "line": "AZUL",
+                "x": 332575.7102714989,
+                "y": 7385179.660421749
+            },
+            {
+                "name": "JABAQUARA",
+                "line": "AZUL",
+                "x": 332624.65743015375,
+                "y": 7383950.247403986
+            }
+        ],
+        "LILAS": [
+            {
+                "name": "CAPÃO REDONDO",
+                "line": "LILAS",
+                "x": 319683.7948884157,
+                "y": 7382376.269482095
+            },
+            {
+                "name": "CAMPO LIMPO",
+                "line": "LILAS",
+                "x": 320593.60775595234,
+                "y": 7383485.695851603
+            },
+            {
+                "name": "VILA DAS BELEZAS",
+                "line": "LILAS",
+                "x": 321930.55525712844,
+                "y": 7384496.532976297
+            },
+            {
+                "name": "GIOVANNI GRONCHI",
+                "line": "LILAS",
+                "x": 323122.92166707246,
+                "y": 7384116.914114306
+            },
+            {
+                "name": "SANTO AMARO",
+                "line": "LILAS",
+                "x": 324481.4432329418,
+                "y": 7382827.99762288
+            },
+            {
+                "name": "LARGO TREZE",
+                "line": "LILAS",
+                "x": 325642.5639874219,
+                "y": 7382984.49753746
+            },
+            {
+                "name": "ADOLFO PINHEIRO",
+                "line": "LILAS",
+                "x": 326212.7397490527,
+                "y": 7383524.11957858
+            },
+            {
+                "name": "ALTO DA BOA VISTA",
+                "line": "LILAS",
+                "x": 326694.5252393895,
+                "y": 7384432.7279054485
+            },
+            {
+                "name": "BORBA GATO",
+                "line": "LILAS",
+                "x": 327300.0967112298,
+                "y": 7385341.450285096
+            },
+            {
+                "name": "BROOKLIN",
+                "line": "LILAS",
+                "x": 327800.8890577214,
+                "y": 7386023.878318231
+            },
+            {
+                "name": "CAMPO BELO",
+                "line": "LILAS",
+                "x": 328372.6604002365,
+                "y": 7386947.605247745
+            },
+            {
+                "name": "EUCALIPTOS",
+                "line": "LILAS",
+                "x": 329721.16769407084,
+                "y": 7387941.258156203
+            },
+            {
+                "name": "MOEMA",
+                "line": "LILAS",
+                "x": 330427.17057804065,
+                "y": 7388704.406630976
+            },
+            {
+                "name": "AACD-SERVIDOR",
+                "line": "LILAS",
+                "x": 331459.46308746876,
+                "y": 7389346.877091318
+            },
+            {
+                "name": "HOSPITAL SÃO PAULO",
+                "line": "LILAS",
+                "x": 332117.3601456324,
+                "y": 7389296.435769393
+            },
+            {
+                "name": "SANTA CRUZ",
+                "line": "LILAS",
+                "x": 332952.8028885692,
+                "y": 7389271.071078364
+            },
+            {
+                "name": "CHÁCARA KLABIN",
+                "line": "LILAS",
+                "x": 333628.2592399176,
+                "y": 7389925.975777136
+            }
+        ],
+        "PRATA": [
+            {
+                "name": "VILA PRUDENTE",
+                "line": "PRATA",
+                "x": 338384.46868313,
+                "y": 7390852.351278825
+            },
+            {
+                "name": "ORATÓRIO",
+                "line": "PRATA",
+                "x": 340615.27483533043,
+                "y": 7391161.705251858
+            },
+            {
+                "name": "SÃO LUCAS",
+                "line": "PRATA",
+                "x": 342412.9881668675,
+                "y": 7390393.007911447
+            },
+            {
+                "name": "CAMILO HADDAD",
+                "line": "PRATA",
+                "x": 343101.6170254986,
+                "y": 7389722.826372011
+            },
+            {
+                "name": "VILA TOLSTÓI",
+                "line": "PRATA",
+                "x": 344189.6717131782,
+                "y": 7389124.523216328
+            },
+            {
+                "name": "VILA UNIÃO",
+                "line": "PRATA",
+                "x": 345312.6543139948,
+                "y": 7388920.587130362
+            },
+            {
+                "name": "JARDIM PLANALTO",
+                "line": "PRATA",
+                "x": 346242.5099378333,
+                "y": 7388429.732274958
+            },
+            {
+                "name": "SAPOPEMBA",
+                "line": "PRATA",
+                "x": 346825.076521783,
+                "y": 7387620.514509711
+            },
+            {
+                "name": "FAZENDA DA JUTA",
+                "line": "PRATA",
+                "x": 348245.48256521695,
+                "y": 7387974.765267497
+            },
+            {
+                "name": "SÃO MATEUS",
+                "line": "PRATA",
+                "x": 349346.88711940567,
+                "y": 7387941.959712099
+            }
+        ],
+        "VERDE": [
+            {
+                "name": "VILA MADALENA",
+                "line": "VERDE",
+                "x": 327406.7357830685,
+                "y": 7394975.260853086
+            },
+            {
+                "name": "SANTUÁRIO NOSSA SENHORA DE FÁTIMA-SUMARÉ",
+                "line": "VERDE",
+                "x": 328772.2624577443,
+                "y": 7394478.996804967
+            },
+            {
+                "name": "CLÍNICAS",
+                "line": "VERDE",
+                "x": 329468.052218247,
+                "y": 7394144.354938008
+            },
+            {
+                "name": "CONSOLAÇÃO",
+                "line": "VERDE",
+                "x": 330449.02274055994,
+                "y": 7393810.549796373
+            },
+            {
+                "name": "TRIANON-MASP",
+                "line": "VERDE",
+                "x": 331148.36714204465,
+                "y": 7393161.491709098
+            },
+            {
+                "name": "BRIGADEIRO",
+                "line": "VERDE",
+                "x": 331876.5533783876,
+                "y": 7392536.519990819
+            },
+            {
+                "name": "PARAÍSO",
+                "line": "VERDE",
+                "x": 332528.1866430653,
+                "y": 7391781.120198658
+            },
+            {
+                "name": "ANA ROSA",
+                "line": "VERDE",
+                "x": 332783.1136079654,
+                "y": 7391165.2655509
+            },
+            {
+                "name": "CHÁCARA KLABIN",
+                "line": "VERDE",
+                "x": 333628.2592399176,
+                "y": 7389925.975777136
+            },
+            {
+                "name": "SANTOS-IMIGRANTES",
+                "line": "VERDE",
+                "x": 334631.1572692752,
+                "y": 7389571.239603045
+            },
+            {
+                "name": "ALTO DO IPIRANGA",
+                "line": "VERDE",
+                "x": 335489.0784018927,
+                "y": 7388887.963803915
+            },
+            {
+                "name": "SACOMÃ",
+                "line": "VERDE",
+                "x": 336426.7553997516,
+                "y": 7388984.853133192
+            },
+            {
+                "name": "TAMANDUATEÍ",
+                "line": "VERDE",
+                "x": 337803.94534220896,
+                "y": 7389938.988883723
+            },
+            {
+                "name": "VILA PRUDENTE",
+                "line": "VERDE",
+                "x": 338576.0013701035,
+                "y": 7390901.38600502
+            }
+        ],
+        "VERMELHA": [
+            {
+                "name": "PALMEIRAS-BARRA FUNDA",
+                "line": "VERMELHA",
+                "x": 329777.8104471179,
+                "y": 7397267.185332295
+            },
+            {
+                "name": "MARECHAL DEODORO",
+                "line": "VERMELHA",
+                "x": 330946.0350367885,
+                "y": 7396442.24306779
+            },
+            {
+                "name": "SANTA CECÍLIA",
+                "line": "VERMELHA",
+                "x": 331683.5670327073,
+                "y": 7395772.95169542
+            },
+            {
+                "name": "REPÚBLICA",
+                "line": "VERMELHA",
+                "x": 332274.04034481174,
+                "y": 7395308.382427695
+            },
+            {
+                "name": "ANHANGABAÚ",
+                "line": "VERMELHA",
+                "x": 332714.4514344799,
+                "y": 7394864.461563792
+            },
+            {
+                "name": "SÉ",
+                "line": "VERMELHA",
+                "x": 333305.33230446884,
+                "y": 7394541.848891843
+            },
+            {
+                "name": "PEDRO II",
+                "line": "VERMELHA",
+                "x": 334041.4327138305,
+                "y": 7394683.769673675
+            },
+            {
+                "name": "BRÁS",
+                "line": "VERMELHA",
+                "x": 335060.0905516312,
+                "y": 7394898.085708711
+            },
+            {
+                "name": "BRESSER-MOOCA",
+                "line": "VERMELHA",
+                "x": 335912.7332437742,
+                "y": 7395063.613244616
+            },
+            {
+                "name": "BELÉM",
+                "line": "VERMELHA",
+                "x": 337688.1811975385,
+                "y": 7395465.915468011
+            },
+            {
+                "name": "TATUAPÉ",
+                "line": "VERMELHA",
+                "x": 339096.3078134011,
+                "y": 7395767.494597994
+            },
+            {
+                "name": "CARRÃO",
+                "line": "VERMELHA",
+                "x": 340331.5073514917,
+                "y": 7396067.7314215
+            },
+            {
+                "name": "PENHA",
+                "line": "VERMELHA",
+                "x": 342552.65432383073,
+                "y": 7396575.7210880015
+            },
+            {
+                "name": "VILA MATILDE",
+                "line": "VERMELHA",
+                "x": 343708.93539349094,
+                "y": 7396765.73642141
+            },
+            {
+                "name": "GUILHERMINA-ESPERANÇA",
+                "line": "VERMELHA",
+                "x": 345181.964852624,
+                "y": 7397070.921077993
+            },
+            {
+                "name": "PATRIARCA",
+                "line": "VERMELHA",
+                "x": 346732.7118234509,
+                "y": 7396874.617164849
+            },
+            {
+                "name": "ARTUR ALVIM",
+                "line": "VERMELHA",
+                "x": 348457.5921919339,
+                "y": 7395884.164706923
+            },
+            {
+                "name": "CORINTHIANS-ITAQUERA",
+                "line": "VERMELHA",
+                "x": 349839.3799263657,
+                "y": 7395675.04694196
+            }
+        ]
+    },
+    "neighbors": {
+        "AMARELA": [
+            {
+                "station": "VILA SÔNIA",
+                "next_station": "SÃO PAULO-MORUMBI",
+                "distance_between": 1360.1420627010018
+            },
+            {
+                "station": "SÃO PAULO-MORUMBI",
+                "next_station": "BUTANTÃ",
+                "distance_between": 2252.704288866057
+            },
+            {
+                "station": "BUTANTÃ",
+                "next_station": "PINHEIROS",
+                "distance_between": 854.3988735232804
+            },
+            {
+                "station": "PINHEIROS",
+                "next_station": "FARIA LIMA",
+                "distance_between": 786.8447279609516
+            },
+            {
+                "station": "FARIA LIMA",
+                "next_station": "FRADIQUE COUTINHO",
+                "distance_between": 1008.7600367139673
+            },
+            {
+                "station": "FRADIQUE COUTINHO",
+                "next_station": "OSCAR FREIRE",
+                "distance_between": 1383.0241774231913
+            },
+            {
+                "station": "OSCAR FREIRE",
+                "next_station": "PAULISTA",
+                "distance_between": 1176.5269436678798
+            },
+            {
+                "station": "PAULISTA",
+                "next_station": "HIGIENÓPOLIS-MACKENZIE",
+                "distance_between": 1219.3650942260338
+            },
+            {
+                "station": "HIGIENÓPOLIS-MACKENZIE",
+                "next_station": "REPÚBLICA",
+                "distance_between": 1059.9135509874463
+            },
+            {
+                "station": "REPÚBLICA",
+                "next_station": "LUZ",
+                "distance_between": 1276.798275442899
+            }
+        ],
+        "AZUL": [
+            {
+                "station": "TUCURUVI",
+                "next_station": "PARADA INGLESA",
+                "distance_between": 972.327916191813
+            },
+            {
+                "station": "PARADA INGLESA",
+                "next_station": "AYRTON SENNA-JARDIM SÃO PAULO",
+                "distance_between": 1035.4987403244509
+            },
+            {
+                "station": "AYRTON SENNA-JARDIM SÃO PAULO",
+                "next_station": "SANTANA",
+                "distance_between": 1369.9333935980853
+            },
+            {
+                "station": "SANTANA",
+                "next_station": "CARANDIRU",
+                "distance_between": 742.9817906804581
+            },
+            {
+                "station": "CARANDIRU",
+                "next_station": "PORTUGUESA-TIETÊ",
+                "distance_between": 759.505158854307
+            },
+            {
+                "station": "PORTUGUESA-TIETÊ",
+                "next_station": "ARMÊNIA",
+                "distance_between": 1121.8607088145882
+            },
+            {
+                "station": "ARMÊNIA",
+                "next_station": "TIRADENTES",
+                "distance_between": 640.2443155672646
+            },
+            {
+                "station": "TIRADENTES",
+                "next_station": "LUZ",
+                "distance_between": 708.2434758846862
+            },
+            {
+                "station": "LUZ",
+                "next_station": "SÃO BENTO",
+                "distance_between": 796.9689509007017
+            },
+            {
+                "station": "SÃO BENTO",
+                "next_station": "SÉ",
+                "distance_between": 773.8220291974334
+            },
+            {
+                "station": "SÉ",
+                "next_station": "JAPÃO-LIBERDADE",
+                "distance_between": 516.5626780627981
+            },
+            {
+                "station": "JAPÃO-LIBERDADE",
+                "next_station": "SÃO JOAQUIM",
+                "distance_between": 825.4050738328781
+            },
+            {
+                "station": "SÃO JOAQUIM",
+                "next_station": "VERGUEIRO",
+                "distance_between": 785.8865403061292
+            },
+            {
+                "station": "VERGUEIRO",
+                "next_station": "PARAÍSO",
+                "distance_between": 758.9562598915242
+            },
+            {
+                "station": "PARAÍSO",
+                "next_station": "ANA ROSA",
+                "distance_between": 656.9716390574481
+            },
+            {
+                "station": "ANA ROSA",
+                "next_station": "VILA MARIANA",
+                "distance_between": 952.0550902814746
+            },
+            {
+                "station": "VILA MARIANA",
+                "next_station": "SANTA CRUZ",
+                "distance_between": 1096.5493124388115
+            },
+            {
+                "station": "SANTA CRUZ",
+                "next_station": "PRAÇA DA ÁRVORE",
+                "distance_between": 1313.8653449948424
+            },
+            {
+                "station": "PRAÇA DA ÁRVORE",
+                "next_station": "SAÚDE",
+                "distance_between": 893.0788219182986
+            },
+            {
+                "station": "SAÚDE",
+                "next_station": "SÃO JUDAS",
+                "distance_between": 807.1637714719857
+            },
+            {
+                "station": "SÃO JUDAS",
+                "next_station": "CONCEIÇÃO",
+                "distance_between": 1067.402547393966
+            },
+            {
+                "station": "CONCEIÇÃO",
+                "next_station": "JABAQUARA",
+                "distance_between": 1230.3870092719121
+            }
+        ],
+        "LILAS": [
+            {
+                "station": "CAPÃO REDONDO",
+                "next_station": "CAMPO LIMPO",
+                "distance_between": 1434.7774473047912
+            },
+            {
+                "station": "CAMPO LIMPO",
+                "next_station": "VILA DAS BELEZAS",
+                "distance_between": 1676.0728843224326
+            },
+            {
+                "station": "VILA DAS BELEZAS",
+                "next_station": "GIOVANNI GRONCHI",
+                "distance_between": 1251.3385377035747
+            },
+            {
+                "station": "GIOVANNI GRONCHI",
+                "next_station": "SANTO AMARO",
+                "distance_between": 1872.6683013285979
+            },
+            {
+                "station": "SANTO AMARO",
+                "next_station": "LARGO TREZE",
+                "distance_between": 1171.620087634238
+            },
+            {
+                "station": "LARGO TREZE",
+                "next_station": "ADOLFO PINHEIRO",
+                "distance_between": 785.0428946331149
+            },
+            {
+                "station": "ADOLFO PINHEIRO",
+                "next_station": "ALTO DA BOA VISTA",
+                "distance_between": 1028.438792711187
+            },
+            {
+                "station": "ALTO DA BOA VISTA",
+                "next_station": "BORBA GATO",
+                "distance_between": 1092.0133565018837
+            },
+            {
+                "station": "BORBA GATO",
+                "next_station": "BROOKLIN",
+                "distance_between": 846.4638177222496
+            },
+            {
+                "station": "BROOKLIN",
+                "next_station": "CAMPO BELO",
+                "distance_between": 1086.367299043968
+            },
+            {
+                "station": "CAMPO BELO",
+                "next_station": "EUCALIPTOS",
+                "distance_between": 1675.057618116577
+            },
+            {
+                "station": "EUCALIPTOS",
+                "next_station": "MOEMA",
+                "distance_between": 1039.6324671356883
+            },
+            {
+                "station": "MOEMA",
+                "next_station": "AACD-SERVIDOR",
+                "distance_between": 1215.8931356964545
+            },
+            {
+                "station": "AACD-SERVIDOR",
+                "next_station": "HOSPITAL SÃO PAULO",
+                "distance_between": 659.8279064255746
+            },
+            {
+                "station": "HOSPITAL SÃO PAULO",
+                "next_station": "SANTA CRUZ",
+                "distance_between": 835.8277001133312
+            },
+            {
+                "station": "SANTA CRUZ",
+                "next_station": "CHÁCARA KLABIN",
+                "distance_between": 940.8195613671339
+            }
+        ],
+        "PRATA": [
+            {
+                "station": "VILA PRUDENTE",
+                "next_station": "ORATÓRIO",
+                "distance_between": 2252.1536291573425
+            },
+            {
+                "station": "ORATÓRIO",
+                "next_station": "SÃO LUCAS",
+                "distance_between": 1955.1646538181628
+            },
+            {
+                "station": "SÃO LUCAS",
+                "next_station": "CAMILO HADDAD",
+                "distance_between": 960.9125874612172
+            },
+            {
+                "station": "CAMILO HADDAD",
+                "next_station": "VILA TOLSTÓI",
+                "distance_between": 1241.7043406068242
+            },
+            {
+                "station": "VILA TOLSTÓI",
+                "next_station": "VILA UNIÃO",
+                "distance_between": 1141.3500115633678
+            },
+            {
+                "station": "VILA UNIÃO",
+                "next_station": "JARDIM PLANALTO",
+                "distance_between": 1051.4608743353142
+            },
+            {
+                "station": "JARDIM PLANALTO",
+                "next_station": "SAPOPEMBA",
+                "distance_between": 997.1044159592408
+            },
+            {
+                "station": "SAPOPEMBA",
+                "next_station": "FAZENDA DA JUTA",
+                "distance_between": 1463.9149318233121
+            },
+            {
+                "station": "FAZENDA DA JUTA",
+                "next_station": "SÃO MATEUS",
+                "distance_between": 1101.8930059005704
+            }
+        ],
+        "VERDE": [
+            {
+                "station": "VILA MADALENA",
+                "next_station": "SANTUÁRIO NOSSA SENHORA DE FÁTIMA-SUMARÉ",
+                "distance_between": 1452.9078101196092
+            },
+            {
+                "station": "SANTUÁRIO NOSSA SENHORA DE FÁTIMA-SUMARÉ",
+                "next_station": "CLÍNICAS",
+                "distance_between": 772.0806757988461
+            },
+            {
+                "station": "CLÍNICAS",
+                "next_station": "CONSOLAÇÃO",
+                "distance_between": 1036.2089742079565
+            },
+            {
+                "station": "CONSOLAÇÃO",
+                "next_station": "TRIANON-MASP",
+                "distance_between": 954.1273460835006
+            },
+            {
+                "station": "TRIANON-MASP",
+                "next_station": "BRIGADEIRO",
+                "distance_between": 959.606608693743
+            },
+            {
+                "station": "BRIGADEIRO",
+                "next_station": "PARAÍSO",
+                "distance_between": 997.6245574519385
+            },
+            {
+                "station": "PARAÍSO",
+                "next_station": "ANA ROSA",
+                "distance_between": 666.5318481495667
+            },
+            {
+                "station": "ANA ROSA",
+                "next_station": "CHÁCARA KLABIN",
+                "distance_between": 1500.0367604042738
+            },
+            {
+                "station": "CHÁCARA KLABIN",
+                "next_station": "SANTOS-IMIGRANTES",
+                "distance_between": 1063.786731679765
+            },
+            {
+                "station": "SANTOS-IMIGRANTES",
+                "next_station": "ALTO DO IPIRANGA",
+                "distance_between": 1096.7654660265703
+            },
+            {
+                "station": "ALTO DO IPIRANGA",
+                "next_station": "SACOMÃ",
+                "distance_between": 942.6694513144306
+            },
+            {
+                "station": "SACOMÃ",
+                "next_station": "TAMANDUATEÍ",
+                "distance_between": 1675.4185053429821
+            },
+            {
+                "station": "TAMANDUATEÍ",
+                "next_station": "VILA PRUDENTE",
+                "distance_between": 1233.8066012505512
+            }
+        ],
+        "VERMELHA": [
+            {
+                "station": "PALMEIRAS-BARRA FUNDA",
+                "next_station": "MARECHAL DEODORO",
+                "distance_between": 1430.132312647063
+            },
+            {
+                "station": "MARECHAL DEODORO",
+                "next_station": "SANTA CECÍLIA",
+                "distance_between": 995.9439673660453
+            },
+            {
+                "station": "SANTA CECÍLIA",
+                "next_station": "REPÚBLICA",
+                "distance_between": 751.3210610796372
+            },
+            {
+                "station": "REPÚBLICA",
+                "next_station": "ANHANGABAÚ",
+                "distance_between": 625.3220460780199
+            },
+            {
+                "station": "ANHANGABAÚ",
+                "next_station": "SÉ",
+                "distance_between": 673.2155216726164
+            },
+            {
+                "station": "SÉ",
+                "next_station": "PEDRO II",
+                "distance_between": 749.65680212898
+            },
+            {
+                "station": "PEDRO II",
+                "next_station": "BRÁS",
+                "distance_between": 1040.958766419838
+            },
+            {
+                "station": "BRÁS",
+                "next_station": "BRESSER-MOOCA",
+                "distance_between": 868.5614115350473
+            },
+            {
+                "station": "BRESSER-MOOCA",
+                "next_station": "BELÉM",
+                "distance_between": 1820.4566777251434
+            },
+            {
+                "station": "BELÉM",
+                "next_station": "TATUAPÉ",
+                "distance_between": 1440.059213345684
+            },
+            {
+                "station": "TATUAPÉ",
+                "next_station": "CARRÃO",
+                "distance_between": 1271.1648394636454
+            },
+            {
+                "station": "CARRÃO",
+                "next_station": "PENHA",
+                "distance_between": 2278.49673556989
+            },
+            {
+                "station": "PENHA",
+                "next_station": "VILA MATILDE",
+                "distance_between": 1171.7899722155414
+            },
+            {
+                "station": "VILA MATILDE",
+                "next_station": "GUILHERMINA-ESPERANÇA",
+                "distance_between": 1504.3116239952872
+            },
+            {
+                "station": "GUILHERMINA-ESPERANÇA",
+                "next_station": "PATRIARCA",
+                "distance_between": 1563.1223220990576
+            },
+            {
+                "station": "PATRIARCA",
+                "next_station": "ARTUR ALVIM",
+                "distance_between": 1989.0219599064362
+            },
+            {
+                "station": "ARTUR ALVIM",
+                "next_station": "CORINTHIANS-ITAQUERA",
+                "distance_between": 1397.52194353048
+            }
+        ]
+    }
+}

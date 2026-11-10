@@ -58,6 +58,12 @@
 
 **Resultado:** o repositório guarda apenas o código-fonte (Python e web) e os modelos matemáticos, escritos em Python.
 
+### 9. Preparação dos dados, guiada — 09–10/11/2026
+
+> lets code / check it please (série de pedidos de revisão enquanto escrevia `data-prep/build_network.py`)
+
+**Resultado:** a IA primeiro escreveu sozinha um script de preparação; Raul apontou que o código deveria ser dele, então o script foi apagado e ele o reescreveu. Em duas sessões, a IA o guiou com perguntas e explicações curtas (GeoPackage como SQLite, leitura do blob de geometria com `struct`, coordenadas UTM em metros, Pitágoras para distâncias, `sort(key=...)`, opções do `json.dump`). A pedido explícito de Raul, a IA forneceu as linhas finais da ordenação (Linha 1 por Y, as demais por X). O resultado é `python/data/network.json`: 93 estações e 87 distâncias entre vizinhas.
+
 ## Funcionalidades desenvolvidas, sugeridas ou modificadas com IA
 
 | Item | Papel da IA |
