@@ -34,3 +34,6 @@ Thumbs.db
 
 # --- Entregas geradas (ZIPs para o Teams) ---
 *.zip
+
+# --- VS Code Code Runner temp files ---
+tempCodeRunnerFile.*
