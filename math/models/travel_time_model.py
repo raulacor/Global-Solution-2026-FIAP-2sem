@@ -33,9 +33,15 @@ def GetDistance(station:str, line:str):
 
 
 def TravelTime(d, v, a, b):
-    travel = v/a + v/b + (d - (v**2/(2*a)) - (v**2/(2*b)))/v 
-    return travel
+    switch = v**2/(2*a) + v**2/(2*b)
+    if d >= switch:
+        trapezoidTravel = v/a + v/b + (d - (v**2/(2*a)) - (v**2/(2*b)))/v 
+        return trapezoidTravel
+    else:
+        vPeak = math.sqrt(d/(1/(2*a) + 1/(2*b)))
+        triangleTravel = vPeak/a + vPeak/b
+        return triangleTravel
+
 
 d, v=GetDistance("ARTUR ALVIM", "VERMELHA")
 print(TravelTime(d, v, a, b))
-print(TravelTime(400, 87/3.6, a, b))
