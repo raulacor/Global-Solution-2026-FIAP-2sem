@@ -87,6 +87,37 @@ def LineOverhead(line):
     return overheadPerStop
 
 
+def VelocityAt(t, d, v, a, b):
+    T = TravelTime(d, v, a, b)
+    if t < 0 or t > T:
+        return 0
+
+    switch = v**2 / (2 * a) + v**2 / (2 * b)
+    if d >= switch:
+        vPeak = v
+    else:
+        vPeak = math.sqrt(d / (1 / (2 * a) + 1 / (2 * b)))
+
+    if t < vPeak / a:
+        return a * t
+    elif t < T - vPeak / b:
+        return vPeak
+    else:
+        return b * (T - t)
+
+
+def IntegrateDistance(d, v, a, b, dt=0.1):
+  T = TravelTime(d, v, a, b)
+  total_distance = 0.0
+  t = 0.0
+
+  while t < T:
+    step = min(dt, T - t)  # Prevents overshooting T on the final slice
+    total_distance += VelocityAt(t, d, v, a, b) * step
+    t += dt
+
+  return total_distance
+
 
 linha = "VERMELHA"
 stacion = "ARTUR ALVIM"
@@ -98,7 +129,7 @@ v = GetCruiseSpeed(linha)
 for s in COMMERCIAL_SPEED_KMH:
     print(f"LineOverhead Test for {s}: {LineOverhead(s)}")
 
-
+print(IntegrateDistance(d, v, a, b))
 """ 
 print(f"LineOverhead Test: {LineOverhead(linha)}")
 print(f"LineRealTime Test: {LineRealTime(linha)}")
