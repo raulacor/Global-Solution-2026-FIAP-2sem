@@ -4,31 +4,36 @@ import math
 a = 1.1 ## Acceleration
 b = 1.2 ## Break rate
 
+# Metrô Transparency Portal, "oferta" dataset — data-prep/raw/metro_sp_service_current.csv, Sep 2026
+COMMERCIAL_SPEED_KMH = {"AZUL": 30, "VERDE": 32, "VERMELHA": 32, "PRATA": 35}
+
+with open("../../python/data/network.json", 'r') as network:
+    data = json.load(network)
+    networkDict = data
+
+
+def GetCruiseSpeed(line):
+    match line:
+        case "AZUL" | "VERMELHA":
+            speedKM = 87
+            v = speedKM / 3.6
+            return v
+        case "PRATA":
+            speedKM = 83
+            v = speedKM / 3.6
+            return v
+        case _:
+            speedKM = 80
+            v = speedKM / 3.6
+            return v
+
+
 def GetDistance(station:str, line:str):
-    def GetCruiseSpeed(line):
-        match line:
-            case "AZUL" | "VERMELHA":
-                speedKM = 87
-                v = speedKM / 3.6
-                return v
-            case "PRATA":
-                speedKM = 83
-                v = speedKM / 3.6
-                return v
-            case _:
-                speedKM = 80
-                v = speedKM / 3.6
-                return v
-
-    with open("../../python/data/network.json", 'r') as network:
-        data = json.load(network)
-        networkDict = data
-
     for s in networkDict["neighbors"][line]:
         if s["station"] == station:
             distanceValue = float(s["distance_between"])
 
-            return distanceValue, GetCruiseSpeed(line)
+            return distanceValue
 
 def TravelTime(d, v, a, b):
     switch = v**2/(2*a) + v**2/(2*b)
@@ -39,6 +44,7 @@ def TravelTime(d, v, a, b):
         vPeak = math.sqrt(d/(1/(2*a) + 1/(2*b)))
         triangleTravel = vPeak/a + vPeak/b
         return triangleTravel
+
 
 def TravelTimeDerivative(d, v, a, b):
     """
@@ -52,6 +58,52 @@ def TravelTimeDerivative(d, v, a, b):
     return dT_dv
 
 
-d, v=GetDistance("ARTUR ALVIM", "VERMELHA")
-print(TravelTime(d, v, a, b))
-print(TravelTimeDerivative(d, v, a, b))
+def LineRunningTime(line:str, v, a, b):
+    totalTime = 0
+    for s in networkDict["neighbors"][line]:
+        distanceValue = float(s["distance_between"])
+        totalTime += TravelTime(distanceValue, v, a, b)
+    return totalTime
+
+
+def LineRealTime(line:str):
+    totalDistance = 0
+    for s in networkDict["neighbors"][line]:
+        distanceValue = float(s["distance_between"])
+        totalDistance += distanceValue
+
+    realTime = totalDistance / (COMMERCIAL_SPEED_KMH[line]/3.6)
+    return realTime
+
+
+def LineOverhead(line):
+    v = GetCruiseSpeed(line)
+    allStations = len(networkDict["neighbors"][line])
+            
+    for c in COMMERCIAL_SPEED_KMH:
+        if c == line:
+            overheadPerStop = ((LineRealTime(line) - LineRunningTime(line, v, a, b)) / allStations)
+
+    return overheadPerStop
+
+
+
+linha = "VERMELHA"
+stacion = "ARTUR ALVIM"
+
+
+d = GetDistance(stacion, linha)
+v = GetCruiseSpeed(linha)
+
+for s in COMMERCIAL_SPEED_KMH:
+    print(f"LineOverhead Test for {s}: {LineOverhead(s)}")
+
+
+""" 
+print(f"LineOverhead Test: {LineOverhead(linha)}")
+print(f"LineRealTime Test: {LineRealTime(linha)}")
+print(f"LineRunningTime Test: {LineRunningTime(linha, v, a, b)}")
+print(f"GetCruiseSpeed Test: {GetCruiseSpeed(linha)}")
+print(f"TravelTime Test: {TravelTime(d, v, a, b)}")
+print(f"TravelTimeDerivative Test: {TravelTimeDerivative(d, v, a, b)}")
+ """
