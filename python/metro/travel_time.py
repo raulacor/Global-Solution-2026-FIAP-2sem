@@ -20,6 +20,17 @@ OVERHEAD = {
     "PRATA": 60.3,
 }
 
+# Minimum headway (s). Lines 1, 2, 3, 15: Metrô "oferta" CSV, Sep 2026.
+# Line 4: ViaQuatro/Motiva infographic. Line 5: Metrô Relatório Integrado 2019 (via Via Trolebus).
+HEADWAY = {
+    "AZUL": 131,
+    "VERDE": 127,
+    "VERMELHA": 132,
+    "PRATA": 170,
+    "AMARELA": 106,
+    "LILAS": 171,
+}
+
 
 def GetCruiseSpeed(line):
     match line:
@@ -47,6 +58,11 @@ def TravelTime(d, v, a, b):
         vPeak = math.sqrt(d/(1/(2*a) + 1/(2*b)))
         triangleTravel = vPeak/a + vPeak/b
         return triangleTravel
+
+
+def TransferTime(line):
+    transferTime = HEADWAY[line] / 2
+    return transferTime
 
 
 def SegmentTime(d, line):
