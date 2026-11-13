@@ -24,9 +24,9 @@ xs.append(T)
 ys.append(0)  
 
 plt.plot(xs, ys)
-plt.xlabel("Time (s)")
-plt.ylabel("Velocity (m/s)")
-plt.title(f"Velocity profile at {station} line: {sLine}")
+plt.xlabel("Tempo (s)")
+plt.ylabel("Velocidade (m/s)")
+plt.title(f"Perfil de velocidade v(t) — {station.title()}, Linha {sLine.title()}")
 
 plt.savefig(f"../plotOutputs/velocity_profile_{slug}.png") # integral 
 
@@ -41,9 +41,9 @@ while v <= 87:
     v +=1
 
 plt.plot(xs, ys)
-plt.xlabel("Top speed (km/h)")
-plt.ylabel("Travel time (s)")
-plt.title(f"Travel time vs top speed at {station} line: {sLine}")
+plt.xlabel("Velocidade máxima (km/h)")
+plt.ylabel("Tempo de viagem (s)")
+plt.title(f"Tempo de viagem × velocidade máxima — {station.title()}, Linha {sLine.title()}")
 plt.savefig(f"../plotOutputs/travel_time_vs_top_speed_{slug}.png")
 
 
@@ -59,11 +59,11 @@ while d <= 1500:
 
 
 switch = v**2 / (2 * a) + v**2 / (2 * b)
-plt.axvline(switch, linestyle="--", label="switch ≈ 509 m")
+plt.axvline(switch, linestyle="--", label="transição ≈ 509 m")
 plt.legend()
 
 plt.plot(xs, ys)
-plt.xlabel("Segment distance (m)")
-plt.ylabel("Travel time (s)")
-plt.title("Travel time vs distance — triangle/trapezoid switch at 87 km/h")
+plt.xlabel("Distância do trecho (m)")
+plt.ylabel("Tempo de viagem (s)")
+plt.title("Tempo de viagem × distância — transição triângulo/trapézio a 87 km/h")
 plt.savefig(f"../plotOutputs/travel_time_vs_distance_{slug}.png")
