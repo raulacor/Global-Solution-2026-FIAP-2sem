@@ -83,12 +83,24 @@ Tempo de percurso do modelo em cada linha (soma de `T` em todos os trechos) comp
 | 2-Verde | 32 km/h | 55,2 s |
 | 3-Vermelha | 32 km/h | 69,2 s |
 | 15-Prata | 35 km/h | 60,3 s |
+| 4-Amarela | 37,1 km/h ¹ | 45,1 s |
+| 5-Lilás | 31,0 km/h ² | 63,4 s |
+
+¹ Calculada a partir do tempo ponta a ponta da operadora: infográfico ViaQuatro/Motiva, 20 min Luz → Vila Sônia (11 estações), sobre os 12.378 m do `network.json`. Sites de terceiros indicam 21–25 min.
+² Calculada a partir de uma viagem cronometrada ponta a ponta: 36 min Capão Redondo → Chácara Klabin (Mobilidade Sampa, 2018), sobre 18.612 m. Outras fontes: 35 min (Metrô CPTM, 2018), ~32 min (horários do Moovit).
+
+As Linhas 4 e 5 são operadas por concessionárias privadas que não publicam o dataset "oferta"; por isso a velocidade delas vem de um tempo ponta a ponta (`distância ÷ tempo × 3,6`).
 
 Linha 3-Vermelha: 2427 s reais contra 1251 s do modelo, ou seja, faltam 1176 s distribuídos em 17 trechos.
 
 **Interpretação:** o acréscimo é maior na Linha 3-Vermelha, a linha que o próprio Metrô aponta como a de fluxo de passageiros mais concentrado. A Sé, onde as Linhas 1 e 3 se encontram, é a estação mais movimentada do sistema, e a maior parte do seu público está na Linha 3 (~199 mil/dia) e não na Linha 1 (~169 mil/dia). A lotação alonga o tempo em cada plataforma. No cálculo de rotas, o peso de cada trecho passa a ser `T + acréscimo(linha)`, o que calibra os tempos absolutos com dados reais, enquanto o modelo continua captando o formato de cada trecho e o efeito da velocidade reduzida.
 
-**Fontes:** Portal da Transparência do Metrô (dataset "oferta"; relatórios do sistema e de planejamento); Gazeta SP (números da estação Sé); Diário do Transporte (ocorrência na Linha 3, 07/09/2026).
+**Fontes:** Portal da Transparência do Metrô (dataset "oferta"; relatórios do sistema e de planejamento); Gazeta SP (números da estação Sé); Diário do Transporte (ocorrência na Linha 3, 07/09/2026); infográfico da Linha 4 (ViaQuatro/Motiva); Mobilidade Sampa, Metrô CPTM e Moovit (Linha 5).
+
+## Limitações
+
+- **Distâncias em linha reta.** O comprimento de cada trecho vem das coordenadas das estações, não do traçado da via, então as curvas ficam de fora (Linha 5: 18,6 km contra os ~20 km oficiais).
+- **Acréscimo como média diária.** O acréscimo vem de uma velocidade média de todo o dia; no horário de pico o tempo de parada é maior e de madrugada é menor. O status ao vivo das linhas cobre parte dos piores casos.
 
 ## Autor
 

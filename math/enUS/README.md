@@ -83,12 +83,24 @@ Model running time for each line (sum of `T` over every segment) compared with t
 | 2-Verde | 32 km/h | 55.2 s |
 | 3-Vermelha | 32 km/h | 69.2 s |
 | 15-Prata | 35 km/h | 60.3 s |
+| 4-Amarela | 37.1 km/h ¹ | 45.1 s |
+| 5-Lilás | 31.0 km/h ² | 63.4 s |
+
+¹ Derived from the operator's end-to-end time: ViaQuatro/Motiva infographic, 20 min Luz → Vila Sônia (11 stations), over the 12,378 m in `network.json`. Third-party sites give 21–25 min.
+² Derived from a timed end-to-end trip: 36 min Capão Redondo → Chácara Klabin (Mobilidade Sampa, 2018), over 18,612 m. Other sources: 35 min (Metrô CPTM, 2018), ~32 min (Moovit timetable).
+
+Lines 4 and 5 are run by private concessionaires that don't publish the "oferta" dataset, so their speed comes from an end-to-end time instead (`distance ÷ time × 3.6`).
 
 Line 3-Vermelha: 2427 s real vs 1251 s model, so 1176 s are missing across 17 segments.
 
 **Interpretation:** the overhead is highest on Line 3-Vermelha, the line Metrô itself identifies as having the most concentrated passenger flow. Sé, where Lines 1 and 3 meet, is the system's busiest station, and more of its passengers are on Line 3 (~199k/day) than on Line 1 (~169k/day). Crowding stretches the time at each platform. In routing, every segment weight becomes `T + overhead(line)`, so absolute times are calibrated with real data while the model still captures per-segment shape and the effect of reduced speed.
 
-**Sources:** Metrô Transparency Portal ("oferta" dataset; system and planning reports); Gazeta SP (Sé station figures); Diário do Transporte (Line 3 incident, 07/09/2026).
+**Sources:** Metrô Transparency Portal ("oferta" dataset; system and planning reports); Gazeta SP (Sé station figures); Diário do Transporte (Line 3 incident, 07/09/2026); ViaQuatro/Motiva Line 4 infographic; Mobilidade Sampa, Metrô CPTM and Moovit (Line 5).
+
+## Limitations
+
+- **Straight-line distances.** Segment lengths come from station coordinates, not track geometry, so curves are missing (Line 5: 18.6 km vs the official ~20 km).
+- **Daily-average overhead.** The overhead comes from an all-day average speed; rush-hour dwell is longer and late-night dwell shorter. Live line status partly covers the worst cases.
 
 ## Author
 

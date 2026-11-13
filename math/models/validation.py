@@ -4,7 +4,8 @@ from travel_time_model import a, b, networkDict, TravelTime, GetCruiseSpeed
 
 
 # Metrô Transparency Portal, "oferta" dataset — data-prep/raw/metro_sp_service_current.csv, Sep 2026
-COMMERCIAL_SPEED_KMH = {"AZUL": 30, "VERDE": 32, "VERMELHA": 32, "PRATA": 35}
+# Line 4: ViaQuatro/Motiva infographic, 20 min Luz → Vila Sônia (third-party sites: 21–25 min)
+COMMERCIAL_SPEED_KMH = {"AZUL": 30, "VERDE": 32, "VERMELHA": 32, "PRATA": 35, "AMARELA": 37.1, "LILAS": 31}
 
 
 
@@ -38,7 +39,7 @@ def LineOverhead(line):
 
 
 if __name__ == "__main__":
-    sLine = "VERMELHA"
+    sLine = "LILAS"
 
     v = GetCruiseSpeed(sLine)
 
