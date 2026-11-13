@@ -7,8 +7,22 @@
 A model of the train's motion between two stations (acceleration, cruise, braking), using limits, derivatives and integrals to compute the travel time that feeds the application's route calculation.
 
 ```
-models/          Python implementations and plots
-report/          technical report (PDF)
+models/
+  travel_time_model.py   core model: TravelTime, TravelTimeDerivative, VelocityAt
+  validation.py          LineRunningTime, LineRealTime, LineOverhead (vs Metrô data)
+  integral.py            IntegrateDistance + dt convergence test
+  plots.py               generates the three figures
+plotOutputs/             figures (PNG) used in the report
+report/                  technical report (PDF)
+```
+
+**Run** (from `math/models/`, Python 3.12+, `pip install -r ../requirements.txt`):
+
+```bash
+python3 travel_time_model.py   # model tests
+python3 validation.py          # per-line overhead
+python3 integral.py            # ∫v dt = d convergence
+python3 plots.py               # writes ../plotOutputs/*.png
 ```
 
 ## The model
@@ -36,6 +50,28 @@ dT/dv = 0                             (triangle: v_peak does not depend on v)
 - Artur Alvim → Corinthians: `dT/dv ≈ −1.52 s per m/s`, which is **≈ 0.43 s per km/h** lost (÷ 3.6).
 - Setting `dT/dv = 0` gives exactly the `v_peak` expression, so the derivative marks the same boundary as the limits section.
 - **Nonlinearity:** cutting the speed from 87 to 60 km/h, the linear estimate is 27 × 0.43 ≈ 11.6 s, but the real difference is **19.5 s** (98.4 − 78.9). The `d/v²` term grows as `v` drops: *every stacked additional km/h lost adds progressively more time to the journey.*
+
+## Integral — distance is the area under v(t)
+
+`d = ∫₀ᵀ v(t) dt`. The trapezoid area splits into three pieces: acceleration ramp `v²/(2a)`, cruise rectangle `d − v²/(2a) − v²/(2b)`, braking ramp `v²/(2b)`. They add up to exactly `d`, so the model is self-consistent. (The two ramps together are also the switch distance from the limits section.)
+
+`VelocityAt(t, …)` returns `a·t` while accelerating, `v_peak` while cruising and `b·(T − t)` while braking. `IntegrateDistance` sums `v(t)·dt` numerically (Artur Alvim → Corinthians, real `d = 1397.52194 m`):
+
+| dt | Result (m) | Error (m) |
+|---|---|---|
+| 0.1 | 1397.51845 | 0.0035 |
+| 0.01 | 1397.52192 | 0.00003 |
+| 0.001 | 1397.52194 | 0.0000003 |
+
+As `dt → 0` the Riemann sum converges to `d`. That is the definition of the definite integral as a limit.
+
+## Figures
+
+| File | Shows | Section |
+|---|---|---|
+| `plotOutputs/velocity_profile_artur_alvim.png` | `v(t)` trapezoid; its area is `d` | Integral |
+| `plotOutputs/travel_time_vs_top_speed_artur_alvim.png` | `T` vs top speed, 20–87 km/h; steeper at low speeds | Derivative |
+| `plotOutputs/travel_time_vs_distance_artur_alvim.png` | `T` vs `d` at 87 km/h; continuous at the 509 m switch | Limits |
 
 ## Validation against Metrô data
 
