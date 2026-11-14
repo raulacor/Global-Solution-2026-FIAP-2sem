@@ -21,7 +21,7 @@ class LineStatusParser(HTMLParser):
         self.div_depth = 0
         self.statuses = []
         self.current_line = {}
-
+        
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
         classes = set(attrs.get("class", "").split())
@@ -49,6 +49,8 @@ class LineStatusParser(HTMLParser):
                         self.current_class = target
                         self.div_depth = 1
                         break
+                if "linha-info" in classes:
+                    self.current_line["linha-info"] = attrs.get("title") or attrs.get("aria-label")
             
         return super().handle_starttag(tag, attrs)
 
@@ -87,7 +89,11 @@ def ParseStatus(html):
     for line in parser.statuses:
         number = line["linha-numero"]
         if number in LINE_BY_NUMBER:
-            result[LINE_BY_NUMBER[number]] = line["linha-situacao"]
+            info = " ".join(line.get("linha-info", "").split())
+            result[LINE_BY_NUMBER[number]] = {
+                "status": line["linha-situacao"],
+                "info": info,
+            }
     
     return result
 
