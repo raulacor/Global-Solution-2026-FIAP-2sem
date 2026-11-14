@@ -31,7 +31,6 @@ HEADWAY = {
     "LILAS": 171,
 }  # values in [s]
 
-
 def GetCruiseSpeed(line):
     """Top speed of a line. Returns v [m/s]."""
     match line:
@@ -73,9 +72,10 @@ def TransferTime(line):
     return transferTime
 
 
-def SegmentTime(d, line):
+def SegmentTime(d, line, factor=1):
     """Real-world time between two neighbouring stations. d [m] → returns [s]."""
-    v = GetCruiseSpeed(line)               # [m/s]
+    v = GetCruiseSpeed(line) * factor      # [m/s]
     time = TravelTime(d, v, a, b)          # [s]  moving
     segmentTime = time + OVERHEAD[line]    # [s] + [s] = [s]  (you can only add same units)
     return segmentTime
+

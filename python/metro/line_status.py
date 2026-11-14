@@ -13,6 +13,13 @@ LINE_BY_NUMBER = {
     "15": "PRATA"
     }
 
+STATUS_FACTOR = {
+    "Velocidade Reduzida": 0.5, 
+    "Operação Parcial": 0.5
+    }
+
+CLOSED_STATUSES = {"Paralisada", "Operação Encerrada"}
+
 class LineStatusParser(HTMLParser):
     def __init__(self):
         super().__init__()
