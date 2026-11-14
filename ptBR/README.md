@@ -1,6 +1,6 @@
 🌐 **Português** · [English](../enUS/README.md)
 
-# CitizenTech — Metrô SP
+# Detour — o melhor caminho pelo metrô de São Paulo
 
 > Global Solution 2026.2 · FIAP · Engenharia de Software · 1º ano
 
@@ -8,13 +8,13 @@
 
 | Campo | Conteúdo |
 |---|---|
-| **Nome da CitizenTech** | _a definir_ |
+| **Nome da CitizenTech** | **Detour** — o app que ajuda você a encontrar o melhor caminho pelo metrô |
 | **Cidade e bairro** | São Paulo — rede do Metrô |
 | **Cidadão beneficiado** | Passageiro que depende do metrô no dia a dia |
 | **Problema, em uma frase** | _a definir_ |
 | **Como funciona** | Mapa da rede do metrô com a situação real das linhas; o usuário escolhe origem e destino e vê a rota mais rápida desenhada no mapa |
 | **O que cada parte faz** | Ver [Estrutura do repositório](#estrutura-do-repositório) |
-| **Link do repositório** | _a definir_ |
+| **Link do repositório** | [https://github.com/raulacor/Global-Solution-2026-FIAP-2sem](https://github.com/raulacor/Global-Solution-2026-FIAP-2sem) (privado) |
 | **Indicador de impacto** | _a definir_ |
 | **ODS conectados** | _a definir_ |
 
@@ -22,7 +22,8 @@
 - Estações e traçados: GeoSampa (Prefeitura de São Paulo), versão de 26/11/2024
 - Velocidade comercial e intervalo mínimo entre trens por linha: Portal da Transparência do Metrô, dataset "oferta" (linhas 1, 2, 3 e 15)
 - Ambos obtidos via [viniciusoike/metrosp](https://github.com/viniciusoike/metrosp) (licença MIT)
-- Situação das linhas em tempo real: Direto do Metrô (a incorporar)
+- Velocidade comercial das linhas 4 e 5: calculada a partir de tempos ponta a ponta da operadora / cronometrados (ver `math/ptBR/README.md`)
+- Situação das linhas em tempo real: [Direto do Metrô](https://www.metro.sp.gov.br/wp-content/themes/metrosp/direto-metro.php?embed=1) (oficial), lida por `python/metro/line_status.py`
 
 ## Estrutura do repositório
 

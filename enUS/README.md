@@ -1,6 +1,6 @@
 🌐 [Português](../ptBR/README.md) · **English**
 
-# CitizenTech — São Paulo Metro
+# Detour — find the best way around the São Paulo metro
 
 > Global Solution 2026.2 · FIAP · Software Engineering · 1st year
 
@@ -8,13 +8,13 @@
 
 | Field | Content |
 |---|---|
-| **CitizenTech name** | _TBD_ |
+| **CitizenTech name** | **Detour** — the app that helps you find the best way around the subway |
 | **City and neighborhood** | São Paulo — Metro network |
 | **Citizen served** | Commuters who depend on the metro every day |
 | **Problem, in one sentence** | _TBD_ |
 | **How it works** | A map of the metro network showing each line's real operating status; the user picks an origin and a destination and sees the fastest route drawn on the map |
 | **What each part does** | See [Repository structure](#repository-structure) |
-| **Repository link** | _TBD_ |
+| **Repository link** | [https://github.com/raulacor/Global-Solution-2026-FIAP-2sem](https://github.com/raulacor/Global-Solution-2026-FIAP-2sem) (private) |
 | **Impact indicator** | _TBD_ |
 | **Connected SDGs** | _TBD_ |
 
@@ -22,7 +22,8 @@
 - Stations and tracks: GeoSampa (Prefeitura de São Paulo), snapshot of 2024-11-26
 - Commercial speed and minimum headway per line: Metrô's Transparency Portal, "oferta" dataset (lines 1, 2, 3 and 15)
 - Both obtained through [viniciusoike/metrosp](https://github.com/viniciusoike/metrosp) (MIT license)
-- Live line status: Direto do Metrô (to be added)
+- Commercial speed for lines 4 and 5: derived from operator / timed end-to-end trips (see `math/README.md`)
+- Live line status: [Direto do Metrô](https://www.metro.sp.gov.br/wp-content/themes/metrosp/direto-metro.php?embed=1) (official), parsed by `python/metro/line_status.py`
 
 ## Repository structure
 
