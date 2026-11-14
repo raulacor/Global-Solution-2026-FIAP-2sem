@@ -6,6 +6,7 @@ que o cálculo de rota usa. Não lê arquivos: quem lê é a CLI ou o front-end.
 from .travel_time import SegmentTime, TransferTime
 
 PAULISTA_CONSOLACAO_WALK = 500
+
 def BuildGraph(network):
 
     graph = {}
