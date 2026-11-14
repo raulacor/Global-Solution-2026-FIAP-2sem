@@ -19,3 +19,17 @@ for node in [("ARTUR ALVIM", "VERMELHA"), ("SÉ", "AZUL"), ("PAULISTA", "AMARELA
     print(node)
     for neighbor, cost in graph.get(node, []):
         print(f"    {neighbor}  {cost:.1f} s")
+
+
+# ---- line_status check -------------------------------------------------------
+from metro.line_status import LineStatusParser
+
+SAMPLE_HTML = Path(__file__).parent.parent / "data-prep" / "raw" / "direto_metro_sample.html"
+
+with open(SAMPLE_HTML, encoding="utf-8") as f:
+    html = f.read()
+
+print("\n--- line_status ---")
+parser = LineStatusParser()
+parser.feed(html)
+print("statuses:", parser.statuses)
