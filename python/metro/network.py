@@ -5,7 +5,7 @@ que o cálculo de rota usa. Não lê arquivos: quem lê é a CLI ou o front-end.
 """
 from .travel_time import SegmentTime, TransferTime
 
-PAULISTA_CONSOLACAO_WALK = 500
+PAULISTA_CONSOLACAO_WALK = 500   # [s] tunnel crossing, Metrô/ViaQuatro average (8 min 20 s)
 
 def BuildGraph(network):
 
@@ -16,7 +16,7 @@ def BuildGraph(network):
         for s in network["neighbors"][l]:
             station = (s["station"], l)
             next_station = (s["next_station"], l)
-            time_to_next = SegmentTime(s["distance_between"], l)
+            time_to_next = SegmentTime(s["distance_between"], l)   # [m] in → [s] out
             graph.setdefault(station, []).append((next_station, time_to_next))
             graph.setdefault(next_station, []).append((station, time_to_next))
       

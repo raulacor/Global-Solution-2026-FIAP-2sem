@@ -2,7 +2,7 @@
 import heapq
 
 def FastestRoute(graph, start, goal):
-    dist = {start: 0}
+    dist = {start: 0}          # node → best time so far [s]
     prev = {}
     heap = [(0, start)]
 
@@ -22,7 +22,7 @@ def FastestRoute(graph, start, goal):
             continue
 
         for neighbor, cost in graph[node]:
-            new_time = time + cost
+            new_time = time + cost     # [s] + [s] = [s]
 
             if neighbor not in dist or new_time < dist[neighbor]:
                 dist[neighbor] = new_time
