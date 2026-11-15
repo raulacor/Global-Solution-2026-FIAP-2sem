@@ -13,3 +13,9 @@ cpSync(source, target, {
   filter: (path) => !path.includes('__pycache__'),
 })
 console.log('[sync:py] python/metro -> web/public/py/metro')
+
+// network.json (estações + vizinhos) também vai junto, para o BuildGraph rodar no navegador.
+const network = fileURLToPath(new URL('../../python/data/network.json', import.meta.url))
+const networkTarget = fileURLToPath(new URL('../public/py/network.json', import.meta.url))
+cpSync(network, networkTarget)
+console.log('[sync:py] python/data/network.json -> web/public/py/network.json')
