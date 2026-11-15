@@ -106,6 +106,18 @@
 
 **Result:** Raul built the menus (`while` + `match/case`) and the status option. On explicit request, the AI wrote `Normalize`, `FindNodes`, `BestRoute` and `PrintRoute` in `main.py` and wired them into the route option.
 
+### 17. Saved trips storage — 2026-11-15
+
+> ok I was thinging bout this saved trips option [...] / oh i didn't know that json persistance was required how do you think wqe should tackle this part then?
+
+**Result:** Raul first planned to keep trips in a dict in memory; the AI pointed out that the brief requires JSON persistence. Together they decided that a trip stores only its name, origin and destination: the route is recalculated with that day's status instead of being saved stale. Raul wrote `storage.py` (`LoadTrips`, which creates the file on first run, and `SaveTrips`) with hints.
+
+### 18. Saving, renaming and deleting trips — 2026-11-15
+
+> please do the rest of this option and lets move / than take care of the update and delete for me deal?
+
+**Result:** Raul wrote the save prompt after a route and the trip list (with `enumerate`, explained in a mini-lesson). On explicit request, the AI fixed the save step (it compared against `"y"` while the prompt says `[s/N]`, and it built a tuple instead of a dict) and wrote the rename and delete options (`ListTrips`, `PickTrip`, `option_saved_trips`).
+
 ## Features developed, suggested or modified with AI
 
 | Item | AI's role |
@@ -122,11 +134,43 @@
 | `main.py` menus and status option | Guided (written by Raul) |
 | `main.py` `Normalize`, `FindNodes`, `BestRoute`, `PrintRoute` | Generated on request |
 | Status test files in `data-prep/raw/` | Found by Raul (Wayback Machine), saved by the AI |
+| `storage.py`, save prompt and trip list in `main.py` | Guided (written by Raul) |
+| `main.py` save fixes, rename and delete (`PickTrip`, `option_saved_trips`) | Generated on request |
 
 ## Verification, testing and adjustments
 
-_in progress — filled in as development continues_
+How the code was checked:
+
+- **Graph:** `check_core.py` builds the network from `data/network.json`: 93 nodes (station, line) and 192 edges, including the 8 same-name transfers and the Paulista ↔ Consolação walk.
+- **Status parser:** tested on four real saved copies of the "Direto do Metrô" page: one live (14/11/2026, all lines normal) and three from the Wayback Machine with Velocidade Reduzida, Operação Parcial and Paralisada. All four statuses and their descriptions come out correctly.
+- **Routes against reality:** Capão Redondo → Luz ≈ 51 min, close to the World Bank's ~50 min for Capão → Sé. Artur Alvim → Paraíso ≈ 35 min with a transfer at Sé. Sé → Luz ≈ 3 min.
+- **Status effects:** the same trip gets longer when a line on it has reduced speed, and returns "Não há rota disponível" when the only line is stopped.
+- **CLI inputs:** station names with or without accents and in any case; an unknown station; an invalid menu option; no internet connection (it shows the message and returns to the menu instead of crashing).
+- **Saved trips:** save two trips in a row (the second is appended, not overwritten), list, rename, delete, invalid trip numbers (`9`, `abc`), and an empty list.
+
+Bugs found by testing and fixed:
+
+- The speed reduction was first also applied to the stop overhead, which made a "slower" line come out faster. The factor now applies only to the cruise speed.
+- `main.py` fetched the status at import time with no error handling, so the program crashed offline. The fetch now happens inside a function with `try/except`.
+- A `return` inside a loop stopped `BuildGraph` and `ParseStatus` after the first item.
+- The save step compared the answer to `"y"` while the prompt asks `[s/N]`, so trips were never saved.
+- An f-string with nested double quotes only runs on Python 3.12+. It was changed so the program runs on 3.10 and 3.11.
 
 ## Critical analysis
 
-_in progress — filled in at the end of the project_
+**Where the AI helped:** turning the brief into a plan, finding real data sources (headways, commercial speeds, the Wayback Machine copies), explaining new concepts (graphs, Dijkstra, `heapq`, `HTMLParser`, `setdefault`, `enumerate`) and reviewing code. The core in `metro/` was written by Raul; the AI wrote only the parts listed above as "Generated", always on request.
+
+**Where the AI was wrong or needed correcting:**
+- It sometimes gave too much code when Raul wanted hints, and he had to ask it to go back to questions.
+- It once claimed a 2 cm error in the integral using a rounded distance; with the exact distance the error was smaller.
+- It wrote the first data-prep script on its own; Raul pointed out it should be his, so it was deleted and he rewrote it.
+
+**Limitations of the solution:**
+- Metrô publishes no number for "Velocidade Reduzida". The 50% reduction is an assumption.
+- The status applies to the whole line, not to the segment where the problem is, because the official page doesn't say which segment is affected.
+- The stop overhead is a daily average. It doesn't change with the time of day or with reduced speed.
+- Distances between stations are straight lines between station coordinates, not track length.
+- The status depends on the HTML of the official page. If Metrô changes the page layout, the parser has to be updated.
+- Without internet, options 1 and 2 don't work: there is no cached status.
+
+**Conclusion:** the AI worked best as a mentor and a reviewer. Every number it brought was checked against a source, and every piece of code was run before being accepted.

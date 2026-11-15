@@ -106,6 +106,18 @@
 
 **Resultado:** Raul construiu os menus (`while` + `match/case`) e a opção de status. A pedido explícito, a IA escreveu `Normalize`, `FindNodes`, `BestRoute` e `PrintRoute` no `main.py` e os ligou à opção de rota.
 
+### 17. Armazenamento das viagens salvas — 15/11/2026
+
+> ok I was thinging bout this saved trips option [...] / oh i didn't know that json persistance was required how do you think wqe should tackle this part then?
+
+**Resultado:** Raul planejava primeiro guardar as viagens em um dict na memória; a IA apontou que o enunciado exige persistência em JSON. Juntos, decidiram que uma viagem guarda só nome, origem e destino: a rota é recalculada com o status do dia, em vez de ficar salva desatualizada. Raul escreveu o `storage.py` (`LoadTrips`, que cria o arquivo na primeira execução, e `SaveTrips`) com dicas.
+
+### 18. Salvar, renomear e apagar viagens — 15/11/2026
+
+> please do the rest of this option and lets move / than take care of the update and delete for me deal?
+
+**Resultado:** Raul escreveu a pergunta de salvar depois da rota e a listagem das viagens (com `enumerate`, explicado em uma mini-aula). A pedido explícito, a IA corrigiu o passo de salvar (ele comparava com `"y"` enquanto a pergunta diz `[s/N]`, e montava uma tupla em vez de um dict) e escreveu as opções de renomear e apagar (`ListTrips`, `PickTrip`, `option_saved_trips`).
+
 ## Funcionalidades desenvolvidas, sugeridas ou modificadas com IA
 
 | Item | Papel da IA |
@@ -122,11 +134,43 @@
 | Menus do `main.py` e opção de status | Guiados (escritos por Raul) |
 | `Normalize`, `FindNodes`, `BestRoute`, `PrintRoute` do `main.py` | Gerados a pedido |
 | Arquivos de teste de status em `data-prep/raw/` | Encontrados por Raul (Wayback Machine), salvos pela IA |
+| `storage.py`, pergunta de salvar e listagem de viagens no `main.py` | Guiados (escritos por Raul) |
+| Correções do salvar, renomear e apagar no `main.py` (`PickTrip`, `option_saved_trips`) | Gerados a pedido |
 
 ## Verificação, testes e ajustes
 
-_em andamento — será preenchido conforme o desenvolvimento_
+Como o código foi conferido:
+
+- **Grafo:** o `check_core.py` monta a rede a partir do `data/network.json`: 93 nós (estação, linha) e 192 ligações, incluindo as 8 baldeações entre estações de mesmo nome e a caminhada Paulista ↔ Consolação.
+- **Leitor de status:** testado em quatro cópias reais salvas da página "Direto do Metrô": uma ao vivo (14/11/2026, todas as linhas normais) e três do Wayback Machine com Velocidade Reduzida, Operação Parcial e Paralisada. Os quatro status e suas descrições saem corretos.
+- **Rotas comparadas com a realidade:** Capão Redondo → Luz ≈ 51 min, perto dos ~50 min do Banco Mundial para Capão → Sé. Artur Alvim → Paraíso ≈ 35 min com baldeação na Sé. Sé → Luz ≈ 3 min.
+- **Efeito do status:** a mesma viagem fica mais longa quando uma linha do trajeto está com velocidade reduzida, e retorna "Não há rota disponível" quando a única linha está paralisada.
+- **Entradas da CLI:** nomes de estação com ou sem acento e em maiúsculas ou minúsculas; estação inexistente; opção de menu inválida; sem conexão com a internet (mostra a mensagem e volta ao menu, sem travar).
+- **Viagens salvas:** salvar duas viagens seguidas (a segunda é adicionada, não sobrescreve), listar, renomear, apagar, números de viagem inválidos (`9`, `abc`) e lista vazia.
+
+Erros encontrados nos testes e corrigidos:
+
+- A redução de velocidade era aplicada também ao tempo de parada, o que fazia uma linha "mais lenta" sair mais rápida. Agora o fator vale só para a velocidade de cruzeiro.
+- O `main.py` buscava o status ao ser importado, sem tratamento de erro, e o programa travava sem internet. Agora a busca acontece dentro de uma função com `try/except`.
+- Um `return` dentro de um laço fazia o `BuildGraph` e o `ParseStatus` pararem no primeiro item.
+- O passo de salvar comparava a resposta com `"y"` enquanto a pergunta pede `[s/N]`, então as viagens nunca eram salvas.
+- Uma f-string com aspas duplas aninhadas só roda no Python 3.12+. Foi alterada para o programa rodar no 3.10 e 3.11.
 
 ## Análise crítica
 
-_em andamento — será preenchido ao final do projeto_
+**Onde a IA ajudou:** transformar o enunciado em um plano, encontrar fontes de dados reais (intervalos entre trens, velocidades comerciais, as cópias do Wayback Machine), explicar conceitos novos (grafos, Dijkstra, `heapq`, `HTMLParser`, `setdefault`, `enumerate`) e revisar o código. O núcleo em `metro/` foi escrito por Raul; a IA escreveu só as partes marcadas acima como "Gerado", sempre a pedido.
+
+**Onde a IA errou ou precisou ser corrigida:**
+- Às vezes deu código demais quando Raul queria dicas, e ele precisou pedir que voltasse às perguntas.
+- Uma vez afirmou um erro de 2 cm na integral usando uma distância arredondada; com a distância exata o erro era menor.
+- Escreveu sozinha o primeiro script de preparação de dados; Raul apontou que ele deveria ser dele, então foi apagado e ele o reescreveu.
+
+**Limitações da solução:**
+- O Metrô não publica um número para "Velocidade Reduzida". A redução de 50% é uma suposição.
+- O status vale para a linha inteira, não só para o trecho com problema, porque a página oficial não diz qual trecho foi afetado.
+- O tempo de parada é uma média diária. Ele não muda com o horário nem com a velocidade reduzida.
+- As distâncias entre estações são linhas retas entre as coordenadas, não o comprimento dos trilhos.
+- O status depende do HTML da página oficial. Se o Metrô mudar o layout, o leitor precisa ser atualizado.
+- Sem internet, as opções 1 e 2 não funcionam: não há status guardado em cache.
+
+**Conclusão:** a IA funcionou melhor como mentora e revisora. Todo número que ela trouxe foi conferido com uma fonte, e todo código foi executado antes de ser aceito.

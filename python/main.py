@@ -11,8 +11,7 @@ from urllib.request import urlopen
 from metro.line_status import ParseStatus
 from metro.network import BuildGraph
 from metro.routing import FastestRoute
-
-
+from storage import LoadTrips, SaveTrips
 
 LINE_BY_NUMBER = {
     "1": "AZUL", 
@@ -22,6 +21,9 @@ LINE_BY_NUMBER = {
     "5": "LILAS", 
     "15": "PRATA"
     }
+
+NETWORK_FILE = Path(__file__).parent / "data" / "network.json"
+
 
 def get_statuses():
     try:    
@@ -38,15 +40,10 @@ def clean():
     input("\nAperte enter para continuar...")
     os.system('cls' if os.name == 'nt' else 'clear')
 
-
-NETWORK_FILE = Path(__file__).parent / "data" / "network.json"
-
-
 def Normalize(text):
     """'Paraíso ' → 'PARAISO': uppercase, no accents, no extra spaces."""
     text = unicodedata.normalize("NFD", text.strip().upper())
     return "".join(c for c in text if unicodedata.category(c) != "Mn")
-
 
 def FindNodes(graph, typed):
     """Every (station, line) node whose name matches what the user typed."""
@@ -55,7 +52,6 @@ def FindNodes(graph, typed):
         if Normalize(station) == Normalize(typed):
             nodes.append((station, line))
     return nodes
-
 
 def BestRoute(graph, start_nodes, goal_nodes):
     """Try every start × goal node and keep the fastest. Returns (seconds, path) or None."""
@@ -66,7 +62,6 @@ def BestRoute(graph, start_nodes, goal_nodes):
             if result is not None and (best is None or result[0] < best[0]):
                 best = result
     return best
-
 
 def PrintRoute(seconds, path):
     """Prints the route grouped by line, marking each transfer."""
@@ -141,8 +136,10 @@ def option_fastest_route():
                         networkDict = json.load(network)
                     graph = BuildGraph(networkDict, statuses)
 
-                    startNodes = FindNodes(graph, input("Início: "))
-                    targetNodes = FindNodes(graph, input("Destino: "))
+                    start = input("Início: ")
+                    target = input("Destino: ")
+                    startNodes = FindNodes(graph, start)
+                    targetNodes = FindNodes(graph, target)
 
                     if not startNodes or not targetNodes:
                         print("Estação não encontrada.")
@@ -152,6 +149,14 @@ def option_fastest_route():
                             print("Não há rota disponível (linha paralisada).")
                         else:
                             PrintRoute(route[0], route[1])
+
+                            saveChoice = input("\nDeseja salvar essa viagem? [s/N] ")
+                            if saveChoice.strip().lower() == "s":
+                                savedName = input("Nome da viagem: ").strip() or f"{start} para {target}"
+                                saved = LoadTrips()
+                                saved.append({"name": savedName, "origin": start, "destination": target})
+                                SaveTrips(saved)
+                                print("Viagem salva!")
                     clean()
 
                 else:
@@ -166,6 +171,66 @@ def option_fastest_route():
             case _:
                 print("Opção inválida.")
 
+def ListTrips(trips):
+    if not trips:
+        print("Nenhuma viagem salva.")
+    else:
+        for ID, trip in enumerate(trips, 1):
+            print(f"{ID}. {trip['name']}: {trip['origin']} → {trip['destination']}")
+
+def PickTrip(trips): ## returns the list index of the chosen trip, or None
+    ListTrips(trips)
+    if not trips:
+        return None
+    choice = input("\nNúmero da viagem: ").strip()
+    if choice.isdigit() and 1 <= int(choice) <= len(trips):
+        return int(choice) - 1
+    print("Opção inválida.")
+    return None
+
+def option_saved_trips(): ## Option 3 from the main menu
+    while True:
+        print(
+            """
+            \n=== DETOUR — viagens salvas ===
+            1. Listar viagens
+            2. Renomear viagem
+            3. Apagar viagem
+            0. Voltar
+            """)
+
+        optionSavedMenu = input("Escolha uma opção: ")
+        trips = LoadTrips()
+
+        match optionSavedMenu:
+            case "1":
+                ListTrips(trips)
+                clean()
+
+            case "2":
+                index = PickTrip(trips)
+                if index is not None:
+                    newName = input("Novo nome: ").strip()
+                    if newName:
+                        trips[index]["name"] = newName
+                        SaveTrips(trips)
+                        print("Viagem renomeada!")
+                clean()
+
+            case "3":
+                index = PickTrip(trips)
+                if index is not None:
+                    removed = trips.pop(index)
+                    SaveTrips(trips)
+                    print(f"Viagem '{removed['name']}' apagada!")
+                clean()
+
+            case "0":
+                clean()
+                return False
+
+            case _:
+                print("Opção inválida.")
 
 
 def main_menu():
@@ -187,6 +252,9 @@ def main_menu():
 
             case "2":
                 option_fastest_route()
+
+            case "3":
+                option_saved_trips()
 
             case "0":
                 return False
