@@ -64,6 +64,48 @@
 
 **Resultado:** a IA primeiro escreveu sozinha um script de preparação; Raul apontou que o código deveria ser dele, então o script foi apagado e ele o reescreveu. Em duas sessões, a IA o guiou com perguntas e explicações curtas (GeoPackage como SQLite, leitura do blob de geometria com `struct`, coordenadas UTM em metros, Pitágoras para distâncias, `sort(key=...)`, opções do `json.dump`). A pedido explícito de Raul, a IA forneceu as linhas finais da ordenação (Linha 1 por Y, as demais por X). O resultado é `python/data/network.json`: 93 estações e 87 distâncias entre vizinhas.
 
+### 10. Projeto do núcleo Python e dados reais — 13/11/2026
+
+> lets tackle what we have to tackle today / what about the other line? isn't there another one missing
+
+**Resultado:** projeto guiado do `metro/`. Raul decidiu usar um nó do grafo por (estação, linha), para que a baldeação tenha custo. Custo da baldeação = metade do intervalo entre trens da linha embarcada (a IA explicou o raciocínio da espera média). Os valores reais foram pesquisados em conjunto: intervalos do CSV do Metrô, do infográfico da ViaQuatro (Linha 4) e do relatório de 2019 do Metrô (Linha 5, encontrado por Raul); tempos ponta a ponta das Linhas 4 e 5 (Raul encontrou 21–25 min e 36 min; a IA encontrou os 20 min da operadora); travessia do túnel Paulista↔Consolação (8 min 20 s, média Metrô/ViaQuatro). Raul escreveu o `travel_time.py`.
+
+### 11. Construção do grafo — 13/11/2026
+
+> check it please / take control and fix it please
+
+**Resultado:** Raul escreveu o `BuildGraph` com dicas passo a passo (dicionário de adjacência, `setdefault`, arestas como tuplas). A pedido explícito, a IA corrigiu duas linhas (indentação do `return` e caminho do arquivo). A IA criou o `check_core.py`, um arquivo de testes executável, depois que Raul não conseguiu rodar módulos do pacote pelo botão ▶ do VS Code.
+
+### 12. Dijkstra — 13/11/2026
+
+> check please (série de revisões)
+
+**Resultado:** Raul escreveu o `FastestRoute` (a regra de relaxamento foi deduzida por ele a partir de perguntas; o `heapq` foi explicado em uma mini-aula) e a reconstrução do caminho a partir de `prev`. Verificado: Artur Alvim → Paraíso = 2110,7 s com baldeação na Sé; Capão Redondo → Luz ≈ 51 min, próximo dos ~50 min Capão→Sé citados pelo Banco Mundial.
+
+### 13. Unidades nos comentários — 13/11/2026
+
+> can you add the units next to the numbers that we already did? this way i will have an example on how to start doing that from now on
+
+**Resultado:** a IA adicionou comentários com unidades (`[m]`, `[s]`, `[m/s]`, álgebra das unidades) nos três arquivos do núcleo, sem alterar a lógica.
+
+### 14. Leitor do status das linhas — 14/11/2026
+
+> check my progress please (série de revisões)
+
+**Resultado:** Raul escreveu o `LineStatusParser` (subclasse de `HTMLParser`) a partir de um esqueleto e de dicas, e encontrou no Wayback Machine exemplos reais de cada status anormal; a IA os salvou como arquivos de teste em `data-prep/raw/`. A pedido, a IA renomeou os métodos do parser de volta para os nomes exigidos pelo `HTMLParser` e forneceu as linhas finais do `ParseStatus` que devolvem status + descrição.
+
+### 15. Rota sensível ao status — 14/11/2026
+
+> lets tackle the color sitch / so for paralisada we don't need to remove the edge can't we just add a factor of zero?
+
+**Resultado:** a IA mostrou que o Metrô não publica um valor de velocidade para "Velocidade Reduzida", então a redução é uma premissa documentada (`REDUCED_SPEED_FACTOR = 0.5`). Raul a escolheu, escreveu o parâmetro `factor` em `SegmentTime` e ligou os status ao `BuildGraph`; linhas fechadas perdem suas arestas (um fator 0 dividiria por zero). Raul argumentou que aplicar a lentidão à linha inteira é realista por causa do agrupamento de trens.
+
+### 16. Opção de rota na CLI — 14/11/2026
+
+> can you do that im too tired now
+
+**Resultado:** Raul construiu os menus (`while` + `match/case`) e a opção de status. A pedido explícito, a IA escreveu `Normalize`, `FindNodes`, `BestRoute` e `PrintRoute` no `main.py` e os ligou à opção de rota.
+
 ## Funcionalidades desenvolvidas, sugeridas ou modificadas com IA
 
 | Item | Papel da IA |
@@ -71,6 +113,15 @@
 | Separação núcleo (`metro/`) × CLI (`main.py`) | Sugerida |
 | Estrutura de pastas, READMEs, `.gitignore` | Gerados |
 | Tradução da documentação (ptBR/enUS) | Gerada |
+| `data-prep/build_network.py` | Guiado (escrito por Raul); linhas finais de ordenação fornecidas pela IA a pedido |
+| `metro/travel_time.py`, `metro/routing.py` | Guiados (escritos por Raul) |
+| `metro/network.py` | Guiado (escrito por Raul); correção de duas linhas pela IA a pedido |
+| `metro/line_status.py` | Guiado (escrito por Raul); renomeação dos métodos e retorno do `ParseStatus` fornecidos pela IA a pedido |
+| Comentários com unidades em `metro/` | Gerados a pedido |
+| `check_core.py` (arquivo de testes) | Gerado |
+| Menus do `main.py` e opção de status | Guiados (escritos por Raul) |
+| `Normalize`, `FindNodes`, `BestRoute`, `PrintRoute` do `main.py` | Gerados a pedido |
+| Arquivos de teste de status em `data-prep/raw/` | Encontrados por Raul (Wayback Machine), salvos pela IA |
 
 ## Verificação, testes e ajustes
 
