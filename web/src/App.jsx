@@ -8,11 +8,24 @@ import MetroMap from "./components/MetroMap/MetroMap"
 function App() {
   const search = useSearch()
   const [route, setRoute] = useState(null)
+  const [message, setMessage] = useState(null)
+
   return (
     <>
     <div className="input-fields">
-      <StationPicker onSearch={(origin, destination) => setRoute(search === null ? "loading" : search(origin, destination).toJs())} />
-        {route === null ? null : <RouteResult route={route} />}
+      <StationPicker onSearch={(origin, destination) => {
+        const result = search === null ? "Acessando sistema de rotas, aguarde..." : search(origin, destination)
+        if (result === undefined) {
+          setRoute(null)
+          setMessage("Rota indísponivel")
+        } else {
+          setRoute(result)
+          setMessage(null)
+        }}} 
+      />
+      {message === null ? null : <p>{message}</p>}
+      {route === null ? null : <RouteResult route={route} />}
+       
     </div>
     <div>
       <MetroMap route={route}/>

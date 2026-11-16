@@ -20,7 +20,7 @@ export const LINE_COLORS = Object.fromEntries(
 // A single plain image layer, no filters on top — cheap for any browser to draw.
 export const BASEMAP = {
   url: 'https://server.arcgisonline.com/ArcGIS/rest/services/Canvas/World_Dark_Gray_Base/MapServer/tile/{z}/{y}/{x}',
-  maxNativeZoom: 16,
+  maxNativeZoom: 14, // deeper levels of this map carry street names; below 14 its images are just enlarged
   opacity: 0.68, // lets the blue behind it (MetroMap.css) tint the grey map navy
   attribution: 'Tiles &copy; Esri &mdash; Esri, HERE, Garmin, FAO, NOAA, USGS, &copy; OpenStreetMap contributors',
 }

@@ -25,8 +25,10 @@ function lineWidth(zoom) {
   return 11
 }
 
+// route may arrive straight from Pyodide (a Python object wrapped by PyProxy) or already as a JS array.
 function pathOf(route) {
-  return Array.isArray(route) && Array.isArray(route[1]) ? route[1] : []
+  const value = typeof route?.toJs === 'function' ? route.toJs() : route
+  return Array.isArray(value) && Array.isArray(value[1]) ? value[1] : []
 }
 
 // A piece of HTML pinned to a point of the map (station name, origin / destination pin).

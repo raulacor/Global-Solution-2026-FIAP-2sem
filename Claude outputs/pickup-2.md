@@ -66,4 +66,6 @@ React (Vite) + Tailwind, ≥8 components, useState + useEffect, ≥2 custom hook
 | **Tue 17 — everything (Raul wants to finish Tue; Wed = buffer only)** | **Morning:** finish CRUD + saved-trip components, redeploy, confirm professors; 15 min to decide problem sentence, impact indicator, SDGs, archetype, mission/vision/values. **Afternoon:** light styling pass, math PDF fixes, ≥15 commits. **Evening:** record pitch video (≤3 min, 9 beats), send brand email, submit. | Morning: web README + AI.md (3 langs), rebuild Python ZIP. Afternoon: STXD slides, video script, email draft (once brand decisions are in). Evening: all ZIPs. |
 | **Wed 18** | buffer — only what slipped; official deadline Wed evening | fixes |
 
+**Polish backlog (Tue, only if time):** transfer walk time — model only counts headway/2 wait at transfers (except Paulista↔Consolação 500 s), so trips with a transfer come out ~5 min short (Sé → Brigadeiro: model 9.8 min vs ~15 real). Options: one declared assumption constant, field measurement, or document as limitation (at minimum add to math PDF limitations).
+
 Cut order if behind: styling/map polish → extra components. Never cut CRUD, deploy, or required docs.
