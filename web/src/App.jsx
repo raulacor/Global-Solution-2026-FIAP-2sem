@@ -4,11 +4,13 @@ import { useState } from "react"
 import StationPicker from "./components/StationPicker/StationPicker"
 import RouteResult from "./components/RouteResult/RouteResult"
 import MetroMap from "./components/MetroMap/MetroMap"
+import useLineStatus from "./hooks/useLineStatus"
 
 function App() {
   const { search, parseStatus } = useSearch()
   const [route, setRoute] = useState(null)
   const [message, setMessage] = useState(null)
+  const statuses = useLineStatus(parseStatus)
 
   return (
     <>
@@ -28,7 +30,7 @@ function App() {
        
     </div>
     <div>
-      <MetroMap route={route}/>
+      <MetroMap route={route} statuses={statuses}/>
     </div>
     <main className="min-h-screen grid place-items-center">
       <h1 className="text-2xl font-semibold">GS 2026.2 — CitizenTech</h1>
