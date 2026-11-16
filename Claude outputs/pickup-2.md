@@ -37,6 +37,7 @@
 - Lessons learned Sun: custom hooks, useEffect + inner async, export default vs named, fetch + .text(), Promise.all + map, Pyodide FS + packages, Vite serves `public/` as `/` (unknown path → index.html), (station, line) tuple keys, restart `npm run dev` after any `python/` change, `pyodide.globals.get`, setter + function → `setX(() => fn)`, PyProxy → `.toJs()`, props, controlled inputs, `onSubmit` (DOM) vs `onSearch` (own prop), state lives at the top of a component. **Recurring slip: saving a value under one name and using another (network/networkDict, graph/networkGraph, StationSelector/StationPicker).**
 - **RouteResult done (Mon 00:37):** `components/RouteResult/RouteResult.jsx` gets `route` ([seconds, path]) → minutes `Math.round(route[0]/60)` + `<ul>` of `route[1].map(([name, line], index) => <li key=...>)`. App: `const [route, setRoute] = useState(null)`, `setRoute(search(o, d).toJs())`, `{route === null ? null : <RouteResult route={route} />}`.
 - **MetroMap done (Claude, Mon 00:45):** `components/MetroMap/MetroMap.jsx` (prop `route` = [seconds, path], optional) + `lib/mapGeometry.js` (pure: UTM → SVG, official line colors, `routePoints`) + `services/networkService.js` (`fetchNetwork()` → /py/network.json). Raul wires it: `<MetroMap route={route} />` in App. Preview: `Claude outputs/map-preview.svg`.
+- **MetroMap v2 by Fable (Mon 01:20, runs fine on Raul's Mac):** Leaflet + Esri dark basemap (needs internet; attribution included — check it on Vercel), UTM→lat/lng in `lib/mapGeometry.js`, animated lines per status, fly-to-route, collision-hidden labels, `MapLegend.jsx`, `MetroMap.css`. Props: `route`, `statuses` ({LINE: {status, info}} as ParseStatus returns). **`lib/lineStatus.js` `statusOf(entry)` → {kind, text, info}: Raul's LineStatusBadge/useLineStatus should REUSE it, not duplicate.** Fallback if it misbehaves: simple SVG map at commit 5481eac. **AI.md must credit Fable for the map v2.**
 - **Next step (Mon):** counter-case first — type a station that doesn't exist ("xyz"): `BestRoute` returns None → `.toJs()` crashes. Handle it. Then group the path by line (like PrintRoute), then Vercel proxy (Claude) + useLineStatus.
 - Commits Raul still needs to make (if not done Sun night): python refactor (`CLAUDE: move Normalize, FindNodes, BestRoute into metro.routing`), web pyodide + StationPicker.
 - Check: Sé → Luz ≈ 3.4 min; Artur Alvim → Paraíso ≈ 35 min; Capão Redondo → Luz ≈ 51 min.
@@ -58,11 +59,11 @@ React (Vite) + Tailwind, ≥8 components, useState + useEffect, ≥2 custom hook
 - Components (≥8): Header, LineStatusList, LineStatusBadge, StationPicker, RouteResult, MetroMap (Claude), SavedTripsList, SavedTripItem, SaveTripForm, Footer/ErrorBanner/Loading.
 - Saved trip: `{ id, name, origin, destination }`.
 
-## Schedule (revised Sun 13:50 — Raul off the rest of Sunday)
+## Schedule (revised Mon 00:48 — ahead: Pyodide, StationPicker, RouteResult, MetroMap done Sun night)
 | Day | Raul | Claude |
 |---|---|---|
-| **Mon 16** | metro/ + network.json into Pyodide, Sé→Luz check; **decide Pyodide vs JS Dijkstra by lunch**; StationPicker + RouteResult; `useLineStatus` + status components | component skeleton, MetroMap, Vercel status proxy |
-| **Tue 17** | MockAPI + `useSavedTrips` + saved-trip components; deploy; confirm professors; ≥15 commits; math PDF fixes | web README + AI.md (3 langs), STXD slide draft |
-| **Wed 18** | pitch video, brand email, ZIPs, submit | video script + email draft, ZIPs |
+| **Mon 16** | "xyz" case (BestRoute → None) + group path by line like PrintRoute; wire `<MetroMap route={route} />`; `useLineStatus` + LineStatusList + LineStatusBadge; **first Vercel deploy**; if time: MockAPI + `useSavedTrips` (pulled from Tue). **Basic Tailwind on every new component as it's written.** | Vercel status proxy function |
+| **Tue 17 — everything (Raul wants to finish Tue; Wed = buffer only)** | **Morning:** finish CRUD + saved-trip components, redeploy, confirm professors; 15 min to decide problem sentence, impact indicator, SDGs, archetype, mission/vision/values. **Afternoon:** light styling pass, math PDF fixes, ≥15 commits. **Evening:** record pitch video (≤3 min, 9 beats), send brand email, submit. | Morning: web README + AI.md (3 langs), rebuild Python ZIP. Afternoon: STXD slides, video script, email draft (once brand decisions are in). Evening: all ZIPs. |
+| **Wed 18** | buffer — only what slipped; official deadline Wed evening | fixes |
 
-Cut order if behind: map polish → extra components. Never cut CRUD, deploy, or required docs.
+Cut order if behind: styling/map polish → extra components. Never cut CRUD, deploy, or required docs.
