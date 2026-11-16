@@ -1,4 +1,4 @@
-# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Sun 15/11/2026 13:50
+# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Sun 15/11/2026 22:41
 
 > Attach this file to a new chat and say "read the pickup and let's continue".
 
@@ -28,12 +28,14 @@
 | Pitch video + brand email | Not started (Wed). Needs archetype, mission, vision, values. |
 | Still open | Problem sentence, impact indicator, SDGs, archetype, mission/vision/values. |
 
-## Web — where we stopped
-- `scripts/sync-python.mjs` copies `python/metro` → `web/public/py/metro/` and `python/data/network.json` → `web/public/py/network.json` (predev/prebuild). Served at `/py/metro/*.py` and `/py/network.json`.
-- `web/src/hooks/usePyodide.js`: `export default function usePython()` — `useState(null)`, `useEffect` with inner `async function load()` → `await loadPyodide()` → `setPython(pyodide)`; `load()` called; deps `[]`. Returns the interpreter itself (not {ready,result,error}).
-- `App.jsx`: `const python = usePython()`; `<p>{python === null ? "Loading…" : python.runPython('1+1')}</p>` → shows **2**. ✅
-- **Next step (task 3):** load `metro/` into Pyodide's FS. Taught: `python.FS.writeFile('greet.py', code)` + `python.pyimport('greet')` (unrelated example). **Open question to Raul:** how do you get the text of `/py/metro/travel_time.py` in JS? (hint: `fetch` + `.text()` from `useJoke`). Expected next snags: `metro` is a package → needs `FS.mkdir('metro')` and all 5 files incl. `__init__.py`; network.json must be passed in (fetch + JSON or write to FS); PyProxy results → `.toJs()`.
-- Check: Sé → Luz ≈ 3 min; Artur Alvim → Paraíso ≈ 35 min; Capão Redondo → Luz ≈ 51 min.
+## Web — where we stopped (Sun 22:41)
+- **Pyodide works — no JS fallback.** Routing runs in the browser: Sé → Luz = 206 s (same as CLI 3.4 min).
+- `usePyodide.js` (`export default function usePython()`): `loadPyodide()` → `FS.mkdir('metro')` → write empty `metro/__init__.py` → `Promise.all(functions.map(...))` fetches `./py/metro/<file>` and `writeFile('metro/' + name, text)` → fetch `./py/network.json` → `writeFile('network.json', ...)` → `setPython(pyodide)`. Returns the interpreter. Leftover: duplicate writeFile line in the map; `./py` should be `/py`.
+- `App.jsx`: temporary test inside `runPython` (backtick string): json.load network.json → BuildGraph → FindNodes + BestRoute("Sé","Luz").
+- **Python refactor (Claude, Sun):** `Normalize`, `FindNodes`, `BestRoute` moved from `main.py` into `metro/routing.py`; main.py imports them. CLI checks still pass. **Python ZIP is now stale → Claude rebuilds at the end.**
+- Lessons Raul learned today: custom hooks, useEffect + inner async function, export default vs named, fetch + .text(), Promise.all + map, Pyodide FS + packages (`__init__.py`, relative imports), Vite serves `public/` as `/` and answers unknown paths with index.html, keys are (station, line) tuples, **restart `npm run dev` after any change in `python/`** (sync only runs on predev).
+- **Next step:** move the Python out of App into the hook: build the graph once inside `load()` and expose a JS function like `findRoute(origin, destination)` → returns `{seconds, path}` (PyProxy → `.toJs()`). Then StationPicker + RouteResult.
+- Check: Sé → Luz ≈ 3.4 min; Artur Alvim → Paraíso ≈ 35 min; Capão Redondo → Luz ≈ 51 min.
 
 ## Python core reference — `python/metro/`, no I/O
 - `travel_time.py`: a=1.1, b=1.2; OVERHEAD, HEADWAY per line; `SegmentTime(d, line, factor=1)`.
