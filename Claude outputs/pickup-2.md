@@ -54,6 +54,14 @@
 ## Web rubric checklist
 React (Vite) + Tailwind, ≥8 components, useState + useEffect, ≥2 custom hooks, logic separated from presentation, external API with full CRUD, ≥15 meaningful commits, Vercel deploy (Root = `web`), ZIP, README, AI.md, private repo with professors' write access. Staying in JavaScript (no TS).
 
+## Raul's UI vision (Mon 11:13)
+- **Header/navbar:** [Logo button] — [Origin input] [Destination input] [Search] — [Saved trips dropdown].
+- Logo = "Detour" written as a button that resets the app (clear route/inputs/message — NOT a full page reload, which would re-download Pyodide).
+- Each input: a line-color dropdown + a station dropdown. Line chosen → only that line's stations. No line → all stations, each with a colored circle for its line(s). Needs a custom dropdown component (native `<select>` can't draw colored circles). Data: `fetchNetwork()`; colors: `LINE_COLORS` in `lib/mapGeometry.js`.
+- After Search, the header panel grows to show the route grouped by line (`lib/groupRoute.js`), circles in each line's color.
+- Saved trips dropdown on the right = SavedTripsList/SavedTripItem (CRUD via `useSavedTrips` + MockAPI).
+- Order: groupRoute → line status + deploy → dropdown picker + expanding header (Mon afternoon or Tue).
+
 ## Web plan
 - Hooks: `usePyodide`, `useLineStatus` (fetch from Vercel serverless proxy — Claude writes the proxy), `useSavedTrips` (CRUD on MockAPI).
 - Components (≥8): Header, LineStatusList, LineStatusBadge, StationPicker, RouteResult, MetroMap (Claude), SavedTripsList, SavedTripItem, SaveTripForm, Footer/ErrorBanner/Loading.
