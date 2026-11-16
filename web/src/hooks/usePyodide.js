@@ -33,9 +33,14 @@ export default function usePython() {
             with open("network.json", "r", encoding="utf-8") as network:
                 networkDict = json.load(network)
 
-            networkGraph = BuildGraph(networkDict)
-            
-            def search(startStation, targetStation):
+                
+            def search(startStation, targetStation, statuses):
+                if statuses:
+                    status = statuses.to_py()
+                    networkGraph = BuildGraph(networkDict, status)
+                else:
+                    networkGraph = BuildGraph(networkDict)
+
                 start = FindNodes(networkGraph, startStation)
                 target = FindNodes(networkGraph, targetStation)
                 route = BestRoute(networkGraph, start, target)

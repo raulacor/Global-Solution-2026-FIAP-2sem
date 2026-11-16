@@ -15,8 +15,8 @@ function App() {
   return (
     <>
     <div className="input-fields">
-      <StationPicker onSearch={(origin, destination) => {
-        const result = search === null ? "Acessando sistema de rotas, aguarde..." : search(origin, destination)
+      <StationPicker onSearch={(origin, destination, statuses) => {
+        const result = search === null ? "Acessando sistema de rotas, aguarde..." : search(origin, destination, statuses)
         if (result === undefined) {
           setRoute(null)
           setMessage("Rota indísponivel")
