@@ -1,4 +1,4 @@
-# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Sun 15/11/2026 22:41
+# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Sun 15/11/2026 23:50
 
 > Attach this file to a new chat and say "read the pickup and let's continue".
 
@@ -28,13 +28,15 @@
 | Pitch video + brand email | Not started (Wed). Needs archetype, mission, vision, values. |
 | Still open | Problem sentence, impact indicator, SDGs, archetype, mission/vision/values. |
 
-## Web — where we stopped (Sun 22:41)
-- **Pyodide works — no JS fallback.** Routing runs in the browser: Sé → Luz = 206 s (same as CLI 3.4 min).
-- `usePyodide.js` (`export default function usePython()`): `loadPyodide()` → `FS.mkdir('metro')` → write empty `metro/__init__.py` → `Promise.all(functions.map(...))` fetches `./py/metro/<file>` and `writeFile('metro/' + name, text)` → fetch `./py/network.json` → `writeFile('network.json', ...)` → `setPython(pyodide)`. Returns the interpreter. Leftover: duplicate writeFile line in the map; `./py` should be `/py`.
-- `App.jsx`: temporary test inside `runPython` (backtick string): json.load network.json → BuildGraph → FindNodes + BestRoute("Sé","Luz").
-- **Python refactor (Claude, Sun):** `Normalize`, `FindNodes`, `BestRoute` moved from `main.py` into `metro/routing.py`; main.py imports them. CLI checks still pass. **Python ZIP is now stale → Claude rebuilds at the end.**
-- Lessons Raul learned today: custom hooks, useEffect + inner async function, export default vs named, fetch + .text(), Promise.all + map, Pyodide FS + packages (`__init__.py`, relative imports), Vite serves `public/` as `/` and answers unknown paths with index.html, keys are (station, line) tuples, **restart `npm run dev` after any change in `python/`** (sync only runs on predev).
-- **Next step:** move the Python out of App into the hook: build the graph once inside `load()` and expose a JS function like `findRoute(origin, destination)` → returns `{seconds, path}` (PyProxy → `.toJs()`). Then StationPicker + RouteResult.
+## Web — where we stopped (Sun 23:50)
+- **Pyodide works — no JS fallback.**
+- `hooks/usePyodide.js` (`export default function usePython()`, imported as `useSearch`): loadPyodide → mkdir metro + empty `__init__.py` → Promise.all fetch `./py/metro/<file>` + writeFile → fetch `./py/network.json` → writeFile → `runPython` builds `networkGraph` once and defines `Search(startStation, targetStation)` = FindNodes + BestRoute → `pyodide.globals.get("Search")` → `setSearch(() => search)`. Returns `search` (null while loading). Small cleanups pending: `./py` → `/py`.
+- `components/StationPicker/StationPicker.jsx` (default export still named `StationSelector` inside — rename to StationPicker): two controlled inputs (origin, destination), `<form onSubmit={handleSubmit}>` → `onSearch(origin, destination)`.
+- `App.jsx`: `const [seconds, setSeconds] = useState(null)`; `<StationPicker onSearch={(o, d) => setSeconds(search === null ? "loading" : search(o, d).toJs()[0])} />`; `<p>{seconds}</p>`. ✅ **Typing stations + Send shows the route time.**
+- **Python refactor (Claude, Sun):** `Normalize`, `FindNodes`, `BestRoute` moved into `metro/routing.py`; CLI checks pass. **Python ZIP stale → Claude rebuilds at the end.**
+- Lessons learned Sun: custom hooks, useEffect + inner async, export default vs named, fetch + .text(), Promise.all + map, Pyodide FS + packages, Vite serves `public/` as `/` (unknown path → index.html), (station, line) tuple keys, restart `npm run dev` after any `python/` change, `pyodide.globals.get`, setter + function → `setX(() => fn)`, PyProxy → `.toJs()`, props, controlled inputs, `onSubmit` (DOM) vs `onSearch` (own prop), state lives at the top of a component. **Recurring slip: saving a value under one name and using another (network/networkDict, graph/networkGraph, StationSelector/StationPicker).**
+- **Next step (Mon):** counter-case first — type a station that doesn't exist ("xyz"): `BestRoute` returns None → `.toJs()` crashes. Handle it. Then RouteResult (show minutes + path grouped by line, like PrintRoute), store the whole result instead of only seconds.
+- Commits Raul still needs to make (if not done Sun night): python refactor (`CLAUDE: move Normalize, FindNodes, BestRoute into metro.routing`), web pyodide + StationPicker.
 - Check: Sé → Luz ≈ 3.4 min; Artur Alvim → Paraíso ≈ 35 min; Capão Redondo → Luz ≈ 51 min.
 
 ## Python core reference — `python/metro/`, no I/O
