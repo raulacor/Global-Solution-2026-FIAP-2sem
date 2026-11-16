@@ -4,7 +4,9 @@ import { loadPyodide } from 'pyodide'
 
 export default function usePython() {
     const functions = ['travel_time.py', 'routing.py', 'network.py', 'line_status.py']
-    const [search, setSearch] = useState(null)
+    const [func, setFunction] = useState({search: null, parseStatus: null})
+    
+    
     useEffect(() => {
         async function load() {
             const pyodide = await loadPyodide()
@@ -26,13 +28,14 @@ export default function usePython() {
             import json
             from metro.network import BuildGraph
             from metro.routing import FastestRoute, Normalize, FindNodes, BestRoute
+            from metro.line_status import ParseStatus  
             
             with open("network.json", "r", encoding="utf-8") as network:
                 networkDict = json.load(network)
 
             networkGraph = BuildGraph(networkDict)
             
-            def Search(startStation, targetStation):
+            def search(startStation, targetStation):
                 start = FindNodes(networkGraph, startStation)
                 target = FindNodes(networkGraph, targetStation)
                 route = BestRoute(networkGraph, start, target)
@@ -41,12 +44,13 @@ export default function usePython() {
 
   
             `)
-            const search = pyodide.globals.get("Search")
-            setSearch(() => search)
+            const parseStatus = pyodide.globals.get("ParseStatus")
+            const search = pyodide.globals.get("search")
+            setFunction(() => ({search, parseStatus}))
         }
         load()
     }, [])
 
-    return search
+    return func
 }
 

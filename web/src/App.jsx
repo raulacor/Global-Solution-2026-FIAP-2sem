@@ -6,7 +6,7 @@ import RouteResult from "./components/RouteResult/RouteResult"
 import MetroMap from "./components/MetroMap/MetroMap"
 
 function App() {
-  const search = useSearch()
+  const { search, parseStatus } = useSearch()
   const [route, setRoute] = useState(null)
   const [message, setMessage] = useState(null)
 
