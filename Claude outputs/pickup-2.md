@@ -1,4 +1,4 @@
-# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Sun 15/11/2026 23:50
+# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Mon 16/11/2026 00:37
 
 > Attach this file to a new chat and say "read the pickup and let's continue".
 
@@ -35,7 +35,8 @@
 - `App.jsx`: `const [seconds, setSeconds] = useState(null)`; `<StationPicker onSearch={(o, d) => setSeconds(search === null ? "loading" : search(o, d).toJs()[0])} />`; `<p>{seconds}</p>`. ✅ **Typing stations + Send shows the route time.**
 - **Python refactor (Claude, Sun):** `Normalize`, `FindNodes`, `BestRoute` moved into `metro/routing.py`; CLI checks pass. **Python ZIP stale → Claude rebuilds at the end.**
 - Lessons learned Sun: custom hooks, useEffect + inner async, export default vs named, fetch + .text(), Promise.all + map, Pyodide FS + packages, Vite serves `public/` as `/` (unknown path → index.html), (station, line) tuple keys, restart `npm run dev` after any `python/` change, `pyodide.globals.get`, setter + function → `setX(() => fn)`, PyProxy → `.toJs()`, props, controlled inputs, `onSubmit` (DOM) vs `onSearch` (own prop), state lives at the top of a component. **Recurring slip: saving a value under one name and using another (network/networkDict, graph/networkGraph, StationSelector/StationPicker).**
-- **Next step (Mon):** counter-case first — type a station that doesn't exist ("xyz"): `BestRoute` returns None → `.toJs()` crashes. Handle it. Then RouteResult (show minutes + path grouped by line, like PrintRoute), store the whole result instead of only seconds.
+- **RouteResult done (Mon 00:37):** `components/RouteResult/RouteResult.jsx` gets `route` ([seconds, path]) → minutes `Math.round(route[0]/60)` + `<ul>` of `route[1].map(([name, line], index) => <li key=...>)`. App: `const [route, setRoute] = useState(null)`, `setRoute(search(o, d).toJs())`, `{route === null ? null : <RouteResult route={route} />}`.
+- **Next step (Mon):** counter-case first — type a station that doesn't exist ("xyz"): `BestRoute` returns None → `.toJs()` crashes. Handle it. Then group the path by line (like PrintRoute), then Vercel proxy (Claude) + useLineStatus.
 - Commits Raul still needs to make (if not done Sun night): python refactor (`CLAUDE: move Normalize, FindNodes, BestRoute into metro.routing`), web pyodide + StationPicker.
 - Check: Sé → Luz ≈ 3.4 min; Artur Alvim → Paraíso ≈ 35 min; Capão Redondo → Luz ≈ 51 min.
 
