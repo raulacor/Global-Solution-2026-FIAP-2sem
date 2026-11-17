@@ -5,7 +5,6 @@ import './MetroMap.css'
 import { fetchNetwork } from '../../services/networkService'
 import { buildMap, BASEMAP } from '../../lib/mapGeometry'
 import { statusOf } from '../../lib/lineStatus'
-import MapLegend from './MapLegend'
 
 // Draws the 6 metro lines over a dark map of São Paulo (streets and colors, no place names).
 // Props:
@@ -325,9 +324,7 @@ export default function MetroMap({ route = null, statuses = null }) {
   return (
     <div className="relative isolate h-[72vh] min-h-[440px] w-full overflow-hidden rounded-3xl bg-slate-900 shadow-2xl ring-1 ring-white/10">
       <div ref={containerRef} className="detour-map h-full w-full" role="img" aria-label="Mapa do metrô de São Paulo" />
-      {map ? (
-        <MapLegend lines={map.lines} statuses={statuses} compact={pathOf(route).length > 0} />
-      ) : (
+      {map ? null : (
         <p className="absolute inset-0 grid place-items-center text-sm text-zinc-400">Carregando mapa…</p>
       )}
     </div>
