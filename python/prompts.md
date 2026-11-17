@@ -133,6 +133,7 @@
 | `check_core.py` (test bench) | Generated |
 | `main.py` menus and status option | Guided (written by Raul) |
 | `main.py` `Normalize`, `FindNodes`, `BestRoute`, `PrintRoute` | Generated on request |
+| `Normalize`, `FindNodes`, `BestRoute` moved from `main.py` to `metro/routing.py` (2026-11-15), so the website uses the same code | Moved on request |
 | Status test files in `data-prep/raw/` | Found by Raul (Wayback Machine), saved by the AI |
 | `storage.py`, save prompt and trip list in `main.py` | Guided (written by Raul) |
 | `main.py` save fixes, rename and delete (`PickTrip`, `option_saved_trips`) | Generated on request |

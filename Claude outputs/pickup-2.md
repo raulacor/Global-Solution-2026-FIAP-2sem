@@ -57,6 +57,12 @@
 ## Web rubric checklist
 React (Vite) + Tailwind, ≥8 components, useState + useEffect, ≥2 custom hooks, logic separated from presentation, external API with full CRUD, ≥15 meaningful commits, Vercel deploy (Root = `web`), ZIP, README, AI.md, private repo with professors' write access. Staying in JavaScript (no TS).
 
+## SUBMITTED (Tue 11:49): Python ZIP, Web Development, Front-end Design (each: repo link + gs_Web ZIP + deploy link). Remaining: STXD PDF (ready), Math PDF (fixes pending), Pitch (deck + video + email doc, Wed).
+
+## STXD deck (Claude, Tue 11:36) — https://claude.ai/artifact/9pTQFP6idsvi6Y5Zi6Y8P2
+13 slides PT: cover (Time: Detour (individual)), problema, escopo, RF/RNF/RN (6 each, with justification), caso de uso, protótipo ×3 (real screenshots 800px + Nielsen heuristics), tom de voz, roadmap, fim. Raul reviewed: OK. Brief says only "slides publicados no Teams" → export PDF (Share › Export) to submit. Optional: swap HD screenshots.
+- Web CRUD DONE Tue 11:20 (tripsService + useSavedTrips by Raul; save button, SavedTripsMenu, SavedTripItem, ActionIcons by Claude). README/AI.md updated (entries 14–15).
+
 ## Brand decisions (Raul, Tue 00:50)
 1. Problem/solution (his words): "Detour allows the commuter to proactively find a better way to his destination instead of just waiting for life to catch on" — this is the *solution*; proposed *problem* sentence: "When a metro line slows down or stops, commuters only find out on the platform and lose time waiting instead of taking a better way."
 2. Impact indicator: minutes saved per trip (computable: route with live status vs. route ignoring it, when a line has a problem).

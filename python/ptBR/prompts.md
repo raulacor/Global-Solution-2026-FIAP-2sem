@@ -133,6 +133,7 @@
 | `check_core.py` (arquivo de testes) | Gerado |
 | Menus do `main.py` e opção de status | Guiados (escritos por Raul) |
 | `Normalize`, `FindNodes`, `BestRoute`, `PrintRoute` do `main.py` | Gerados a pedido |
+| `Normalize`, `FindNodes`, `BestRoute` movidos do `main.py` para `metro/routing.py` (15/11/2026), para o site usar o mesmo código | Movidos a pedido |
 | Arquivos de teste de status em `data-prep/raw/` | Encontrados por Raul (Wayback Machine), salvos pela IA |
 | `storage.py`, pergunta de salvar e listagem de viagens no `main.py` | Guiados (escritos por Raul) |
 | Correções do salvar, renomear e apagar no `main.py` (`PickTrip`, `option_saved_trips`) | Gerados a pedido |
