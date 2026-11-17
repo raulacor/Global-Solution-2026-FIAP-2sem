@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
-import { getTrips, createTrip } from '../services/tripsService'
+import { getTrips, createTrip, updateTrip, removeTrip } from '../services/tripsService'
 
 
-export default function useSavedTrips() {
+export default function useSavedTrips() { 
     const [trips, setTrips] = useState([])
 
     useEffect(() => {
@@ -14,10 +14,26 @@ export default function useSavedTrips() {
         load()
     }, [])
 
-    async function addTrip(trip) {
+    
+    async function addTrip(trip) { 
         const isSaved = await createTrip(trip)
         setTrips([...trips, isSaved])
+
     }
-    return {trips, addTrip}
+    
+    async function renameTrip(id, newName) { 
+        const updated = await updateTrip(id, { name: newName })
+        setTrips(trips.map((trip) => (trip.id === id ? updated: trip)))
+
+    }
+    
+    async function deleteTrip(id) {
+        await removeTrip(id)
+        setTrips(trips.filter((trip) => trip.id !== id))
+        
+    }
+    
+    return {trips, addTrip, renameTrip, deleteTrip}
+
 }
 

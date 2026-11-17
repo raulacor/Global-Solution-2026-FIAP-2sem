@@ -14,3 +14,18 @@ export async function createTrip(trip) {
     })
     return response.json()
 }
+
+export async function updateTrip(id, changes) {
+     const response = await fetch(API + "/" + id, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(changes),
+    })
+    return response.json()
+}
+
+export async function removeTrip(id) {
+    await fetch(API + "/" + id, {
+        method: "DELETE",
+    })
+}
