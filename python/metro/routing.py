@@ -1,5 +1,6 @@
 """Rota mais rápida entre duas estações da rede."""
 import heapq
+import unicodedata
 
 def FastestRoute(graph, start, goal):
     dist = {start: 0}          # node → best time so far [s]
@@ -31,3 +32,27 @@ def FastestRoute(graph, start, goal):
                 heapq.heappush(heap, (new_time, neighbor))
 
     return None # If this path is unreachble
+
+
+def Normalize(text):
+    """'Paraíso ' → 'PARAISO': uppercase, no accents, no extra spaces."""
+    text = unicodedata.normalize("NFD", text.strip().upper())
+    return "".join(c for c in text if unicodedata.category(c) != "Mn")
+
+def FindNodes(graph, typed):
+    """Every (station, line) node whose name matches what the user typed."""
+    nodes = []
+    for station, line in graph:
+        if Normalize(station) == Normalize(typed):
+            nodes.append((station, line))
+    return nodes
+
+def BestRoute(graph, start_nodes, goal_nodes):
+    """Try every start × goal node and keep the fastest. Returns (seconds, path) or None."""
+    best = None
+    for start in start_nodes:
+        for goal in goal_nodes:
+            result = FastestRoute(graph, start, goal)
+            if result is not None and (best is None or result[0] < best[0]):
+                best = result
+    return best
