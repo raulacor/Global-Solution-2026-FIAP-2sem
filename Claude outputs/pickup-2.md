@@ -1,4 +1,4 @@
-# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Mon 16/11/2026 21:31
+# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Tue 17/11/2026 00:22
 
 > Attach this file to a new chat and say "read the pickup and let's continue".
 
@@ -33,8 +33,11 @@
 - **Status proxy (Claude):** `web/api/status.js` (Vercel function, 60 s edge cache) + Vite dev proxy in `vite.config.js` → same URL `/api/status` in dev and prod. Tested locally ✅.
 - **Commits:** ≥15 on feat/web (rubric ✅ once tonight's 2 are in).
 - **Components so far (6):** StationPicker, RouteResult, MetroMap, LineStatusBadge, LineStatusList (+ MapLegend removed). Need ≥8 → Header/Logo, SavedTrips components coming.
+- **Styling session (Mon 23:45 → Tue 00:21, Claude at Raul's request — credit in AI.md):** `index.css` (dark body, Parisienne via Google Fonts → `font-logo` in `@theme`; Google `@import` must come BEFORE tailwind's); `Logo` (wordmark button, neon cyan hover, prop `onReset` — **not wired yet**); `StationPicker` (split pill inputs Origem/Destino, round 48px search button overlapping both, neon `#00f0ff` hover/focus); `icons/StationIcon` (Raul's drawing: ring + 3 tracks, currentColor); `SavedTripsMenu` + `icons/BookmarkIcon` (round button, props `open`, `onToggle`); sticky translucent header (z-[1100] above Leaflet); route result in a floating panel under the fields (absolute → map never moves); map `mt-12`, `h-[60vh]`, max 1100px (MetroMap got a `className` prop); `RouteResult` timeline (big minutes, padded seconds, per-line colored bar + dots, "⇄ Baldeação em X", `prettyName`); `LineStatusList`/`LineStatusBadge` = one continuous 18-node metro line (3 nodes per line, solid/dashed/faded by status, text under each stretch). Old `<main>` "GS 2026.2" stub removed. **Components now ≥8 ✅.**
+- **Raul's open bugs in App.jsx (teaching, not fixed by Claude):** (1) `onSearch={(origin, destination, statuses) => …}` — extra `statuses` param shadows the hook's statuses → routing ignores live status; (2) `setRoute(result)` lost `.toJs()` → map's `pathOf` needs a real array, so the dotted route isn't drawn; (3) `<Logo onReset={...} />` → clear route + message.
 - **Small pending:** click before Pyodide loads → `result` = text → `.toJs()` crash (fix: early `if (search === null) { setMessage(...); return }`); `./py` → `/py` in usePyodide; StationPicker default export still named StationSelector; time display `3:4` → pad seconds.
-- **Deploy (next):** Vercel → import repo → Root Directory `web` → "Include files outside the root directory" ON (sync reads ../python) → first deploy is a *preview* of feat/web; merge to main Tue for the production link. Test on Vercel: map loads, Sé → Luz (Pyodide in prod build — riskiest), status list real.
+- **DEPLOYED ✅ (Mon 22:08): https://detour-rust.vercel.app** (production = main, auto-redeploys on every merge to main; work continues on feat/web → PR → main). Pyodide runtime now served from `/pyodide/` (sync script copies node_modules/pyodide → public/pyodide, gitignored; `loadPyodide({ indexURL: '/pyodide/' })`) — without it prod 404'd on python_stdlib.zip.
+- **Deploy notes (old):** Vercel → import repo → Root Directory `web` → "Include files outside the root directory" ON (sync reads ../python) → first deploy is a *preview* of feat/web; merge to main Tue for the production link. Test on Vercel: map loads, Sé → Luz (Pyodide in prod build — riskiest), status list real.
 - **MockAPI:** create project + `trips` resource (name, origin, destination) — 10 min, no code.
 - Lessons Mon: early return in handlers, two moments of a component (click vs drawing), JSX `? :` only, `null` draws nothing, `.toJs` placement, nested map, objects `{line, lines}`, Tailwind can't build dynamic classes → `style={{ backgroundColor }}`, `Object.keys`, `?.`, props names must match the tag's attributes, `() => ({...})` returns an object, `function` is reserved, `.to_py()` (JS → Python), effect deps `[x]`.
 - **Recurring slips:** name saved one way / used another; braces vs parentheses in arrows; unsaved files (turn on VS Code Auto Save); `.method()` attached after the setter's closing paren.
@@ -64,12 +67,12 @@ React (Vite) + Tailwind, ≥8 components, useState + useEffect, ≥2 custom hook
 - Components (≥8): Header, LineStatusList, LineStatusBadge, StationPicker, RouteResult, MetroMap (Claude), SavedTripsList, SavedTripItem, SaveTripForm, Footer/ErrorBanner/Loading.
 - Saved trip: `{ id, name, origin, destination }`.
 
-## Schedule (revised Mon 00:48 — ahead: Pyodide, StationPicker, RouteResult, MetroMap done Sun night)
-| Day | Raul | Claude |
+## Schedule (revised Tue 00:22 — Raul sleeps until ~15:00 Tue; Wed is now a work day, not a buffer)
+| When | Raul | Claude |
 |---|---|---|
-| **Mon 16** | "xyz" case (BestRoute → None) + group path by line like PrintRoute; wire `<MetroMap route={route} />`; `useLineStatus` + LineStatusList + LineStatusBadge; **first Vercel deploy**; if time: MockAPI + `useSavedTrips` (pulled from Tue). **Basic Tailwind on every new component as it's written.** | Vercel status proxy function |
-| **Tue 17 — everything (Raul wants to finish Tue; Wed = buffer only)** | **Morning:** finish CRUD + saved-trip components, redeploy, confirm professors; 15 min to decide problem sentence, impact indicator, SDGs, archetype, mission/vision/values. **Afternoon:** light styling pass, math PDF fixes, ≥15 commits. **Evening:** record pitch video (≤3 min, 9 beats), send brand email, submit. | Morning: web README + AI.md (3 langs), rebuild Python ZIP. Afternoon: STXD slides, video script, email draft (once brand decisions are in). Evening: all ZIPs. |
-| **Wed 18** | buffer — only what slipped; official deadline Wed evening | fixes |
+| **Tue 15:00–19:00** | fix the 3 App.jsx items above; MockAPI project + `useSavedTrips` (CRUD) + saved-trips dropdown in `SavedTripsMenu`; merge feat/web → main (redeploy); confirm professors accepted; 15 min: problem sentence, impact indicator, SDGs, archetype, mission/vision/values | web README + AI.md (3 langs, credit Claude + Fable incl. styling); rebuild Python ZIP |
+| **Tue 19:00–late** | math PDF fixes (incl. transfer-walk limitation) | STXD slides, video script, brand email draft (needs the brand decisions) |
+| **Wed 18 (deadline evening)** | record pitch video (≤3 min), send brand email, final merge/deploy check, ZIPs, submit | all ZIPs, final checks |
 
 **Polish backlog (Tue, only if time):** transfer walk time — model only counts headway/2 wait at transfers (except Paulista↔Consolação 500 s), so trips with a transfer come out ~5 min short (Sé → Brigadeiro: model 9.8 min vs ~15 real). Options: one declared assumption constant, field measurement, or document as limitation (at minimum add to math PDF limitations).
 

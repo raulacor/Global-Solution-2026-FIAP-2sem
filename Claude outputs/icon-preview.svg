@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640" height="320" viewBox="0 0 160 80">
+<rect width="160" height="80" fill="#0f172a"/>
+<g transform="translate(10,28)" fill="#ffffff"><defs><mask id="m"><rect width="52" height="24" fill="white"/><circle cx="26" cy="11" r="12.2" fill="black"/></mask></defs>
+<g mask="url(#m)"><rect x="0" y="5.4" width="52" height="2.4"/><rect x="0" y="9.8" width="52" height="2.4"/><rect x="0" y="14.2" width="52" height="2.4"/></g>
+<circle cx="26" cy="11" r="9.6" fill="none" stroke="#ffffff" stroke-width="2.6"/></g>
+<g transform="translate(90,28)" fill="#fbbf24"><g mask="url(#m)"><rect x="0" y="5.4" width="52" height="2.4"/><rect x="0" y="9.8" width="52" height="2.4"/><rect x="0" y="14.2" width="52" height="2.4"/></g>
+<circle cx="26" cy="11" r="9.6" fill="none" stroke="#fbbf24" stroke-width="2.6"/></g>
+</svg>
