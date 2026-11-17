@@ -10,6 +10,7 @@ import { statusOf } from '../../lib/lineStatus'
 // Props:
 //   route    — optional, the [seconds, path] result of search(...).toJs(). The map flies to it,
 //              highlights it and names its stations.
+//   className — size of the map box (Tailwind classes); defaults to 72vh tall, full width.
 //   statuses — optional, { LINE: { status, info } } exactly as ParseStatus returns it.
 //              A line with no status is drawn as running normally.
 
@@ -77,7 +78,7 @@ function hideOverlappingLabels(container) {
   }
 }
 
-export default function MetroMap({ route = null, statuses = null }) {
+export default function MetroMap({ route = null, statuses = null, className = 'h-[72vh] min-h-[440px] w-full' }) {
   const [network, setNetwork] = useState(null)
   const [error, setError] = useState(null)
   const containerRef = useRef(null)
@@ -322,7 +323,7 @@ export default function MetroMap({ route = null, statuses = null }) {
   if (error) return <p className="text-sm text-red-600">Map unavailable: {error}</p>
 
   return (
-    <div className="relative isolate h-[72vh] min-h-[440px] w-full overflow-hidden rounded-3xl bg-slate-900 shadow-2xl ring-1 ring-white/10">
+    <div className={`relative isolate overflow-hidden rounded-3xl bg-slate-900 shadow-2xl ring-1 ring-white/10 ${className}`}>
       <div ref={containerRef} className="detour-map h-full w-full" role="img" aria-label="Mapa do metrô de São Paulo" />
       {map ? null : (
         <p className="absolute inset-0 grid place-items-center text-sm text-zinc-400">Carregando mapa…</p>

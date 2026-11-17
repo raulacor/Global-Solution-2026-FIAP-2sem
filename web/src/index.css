@@ -1,1 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Parisienne&display=swap');
 @import "tailwindcss";
+
+@theme {
+  /* className="font-logo" → the French script used by the Detour wordmark */
+  --font-logo: "Parisienne", cursive;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 antialiased;
+}
