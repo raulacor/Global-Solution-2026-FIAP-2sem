@@ -15,7 +15,13 @@ import { statusOf } from '../../lib/lineStatus'
 //              A line with no status is drawn as running normally.
 
 const WHOLE_NETWORK = { padding: [36, 36] }
-const AROUND_ROUTE = { paddingTopLeft: [120, 90], paddingBottomRight: [150, 90], maxZoom: 16 }
+// Framing of a route. On wide maps App shows the route summary as a 320 px panel on the
+// left edge, so the route is framed to the right of it; on narrow maps the panel sits below.
+function aroundRoute(container) {
+  return container.clientWidth >= 640
+    ? { paddingTopLeft: [370, 70], paddingBottomRight: [90, 70], maxZoom: 16 }
+    : { paddingTopLeft: [40, 60], paddingBottomRight: [40, 60], maxZoom: 16 }
+}
 
 // Lines get thicker as you zoom in, so they never get lost in the background.
 function lineWidth(zoom) {
@@ -315,7 +321,7 @@ export default function MetroMap({ route = null, statuses = null, className = 'h
 
     const routeBounds = L.latLngBounds(stops.map((stop) => stop.latlng))
     for (const leg of legs) routeBounds.extend(L.latLngBounds(leg.latlngs))
-    leafletMap.flyToBounds(routeBounds, { ...AROUND_ROUTE, duration: 1.4 })
+    leafletMap.flyToBounds(routeBounds, { ...aroundRoute(container), duration: 1.4 })
     leaflet.showsRoute = true
     hideOverlappingLabels(container)
   }, [map, route])
