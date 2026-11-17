@@ -17,6 +17,7 @@ function App() {
     <>
     <div className="input-fields">
       <StationPicker onSearch={(origin, destination, statuses) => {
+        if (search === null) { setMessage('Carregando o sistema de rotas, aguarde…'); return }
         const result = search === null ? "Acessando sistema de rotas, aguarde..." : search(origin, destination, statuses)
         if (result === undefined) {
           setRoute(null)

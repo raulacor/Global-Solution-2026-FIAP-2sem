@@ -19,3 +19,18 @@ const network = fileURLToPath(new URL('../../python/data/network.json', import.m
 const networkTarget = fileURLToPath(new URL('../public/py/network.json', import.meta.url))
 cpSync(network, networkTarget)
 console.log('[sync:py] python/data/network.json -> web/public/py/network.json')
+
+// Pyodide runtime (wasm + Python stdlib). Vite bundles pyodide.mjs but not these files, so in
+// production loadPyodide() 404s on /assets/python_stdlib.zip. Serving them from /pyodide/ and
+// passing indexURL: '/pyodide/' makes dev and Vercel load the exact same files.
+const pyodideSource = fileURLToPath(new URL('../node_modules/pyodide/', import.meta.url))
+const pyodideTarget = fileURLToPath(new URL('../public/pyodide/', import.meta.url))
+rmSync(pyodideTarget, { recursive: true, force: true })
+cpSync(pyodideSource, pyodideTarget, {
+  recursive: true,
+  filter: (path) =>
+    path === pyodideSource.replace(/\/$/, '') ||
+    path.endsWith('/') ||
+    /pyodide-lock\.json$|pyodide\.asm\.(mjs|wasm)$|python_stdlib\.zip$|pyodide\.mjs$/.test(path),
+})
+console.log('[sync:py] node_modules/pyodide runtime -> web/public/pyodide')
