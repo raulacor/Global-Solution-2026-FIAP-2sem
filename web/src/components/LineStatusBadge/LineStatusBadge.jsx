@@ -1,7 +1,7 @@
 import { LINE_COLORS } from '../../lib/mapGeometry'
 import { statusOf } from '../../lib/lineStatus'
 
-export default function LineStatusBadge({status}) {
+export default function LineStatusBadge({ line, status }) {
   return (
     <li>
         <span className='inline-flex items-center gap-2'>

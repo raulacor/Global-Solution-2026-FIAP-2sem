@@ -1,4 +1,4 @@
-# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Mon 16/11/2026 00:37
+# Pickup — Detour (FIAP GS 2026.2 CitizenTech) — updated Mon 16/11/2026 21:31
 
 > Attach this file to a new chat and say "read the pickup and let's continue".
 
@@ -28,19 +28,16 @@
 | Pitch video + brand email | Not started (Wed). Needs archetype, mission, vision, values. |
 | Still open | Problem sentence, impact indicator, SDGs, archetype, mission/vision/values. |
 
-## Web — where we stopped (Sun 23:50)
-- **Pyodide works — no JS fallback.**
-- `hooks/usePyodide.js` (`export default function usePython()`, imported as `useSearch`): loadPyodide → mkdir metro + empty `__init__.py` → Promise.all fetch `./py/metro/<file>` + writeFile → fetch `./py/network.json` → writeFile → `runPython` builds `networkGraph` once and defines `Search(startStation, targetStation)` = FindNodes + BestRoute → `pyodide.globals.get("Search")` → `setSearch(() => search)`. Returns `search` (null while loading). Small cleanups pending: `./py` → `/py`.
-- `components/StationPicker/StationPicker.jsx` (default export still named `StationSelector` inside — rename to StationPicker): two controlled inputs (origin, destination), `<form onSubmit={handleSubmit}>` → `onSearch(origin, destination)`.
-- `App.jsx`: `const [seconds, setSeconds] = useState(null)`; `<StationPicker onSearch={(o, d) => setSeconds(search === null ? "loading" : search(o, d).toJs()[0])} />`; `<p>{seconds}</p>`. ✅ **Typing stations + Send shows the route time.**
-- **Python refactor (Claude, Sun):** `Normalize`, `FindNodes`, `BestRoute` moved into `metro/routing.py`; CLI checks pass. **Python ZIP stale → Claude rebuilds at the end.**
-- Lessons learned Sun: custom hooks, useEffect + inner async, export default vs named, fetch + .text(), Promise.all + map, Pyodide FS + packages, Vite serves `public/` as `/` (unknown path → index.html), (station, line) tuple keys, restart `npm run dev` after any `python/` change, `pyodide.globals.get`, setter + function → `setX(() => fn)`, PyProxy → `.toJs()`, props, controlled inputs, `onSubmit` (DOM) vs `onSearch` (own prop), state lives at the top of a component. **Recurring slip: saving a value under one name and using another (network/networkDict, graph/networkGraph, StationSelector/StationPicker).**
-- **RouteResult done (Mon 00:37):** `components/RouteResult/RouteResult.jsx` gets `route` ([seconds, path]) → minutes `Math.round(route[0]/60)` + `<ul>` of `route[1].map(([name, line], index) => <li key=...>)`. App: `const [route, setRoute] = useState(null)`, `setRoute(search(o, d).toJs())`, `{route === null ? null : <RouteResult route={route} />}`.
-- **MetroMap done (Claude, Mon 00:45):** `components/MetroMap/MetroMap.jsx` (prop `route` = [seconds, path], optional) + `lib/mapGeometry.js` (pure: UTM → SVG, official line colors, `routePoints`) + `services/networkService.js` (`fetchNetwork()` → /py/network.json). Raul wires it: `<MetroMap route={route} />` in App. Preview: `Claude outputs/map-preview.svg`.
-- **MetroMap v2 by Fable (Mon 01:20, runs fine on Raul's Mac):** Leaflet + Esri dark basemap (needs internet; attribution included — check it on Vercel), UTM→lat/lng in `lib/mapGeometry.js`, animated lines per status, fly-to-route, collision-hidden labels, `MapLegend.jsx`, `MetroMap.css`. Props: `route`, `statuses` ({LINE: {status, info}} as ParseStatus returns). **`lib/lineStatus.js` `statusOf(entry)` → {kind, text, info}: Raul's LineStatusBadge/useLineStatus should REUSE it, not duplicate.** Fallback if it misbehaves: simple SVG map at commit 5481eac. **AI.md must credit Fable for the map v2.**
-- **Next step (Mon):** counter-case first — type a station that doesn't exist ("xyz"): `BestRoute` returns None → `.toJs()` crashes. Handle it. Then group the path by line (like PrintRoute), then Vercel proxy (Claude) + useLineStatus.
-- Commits Raul still needs to make (if not done Sun night): python refactor (`CLAUDE: move Normalize, FindNodes, BestRoute into metro.routing`), web pyodide + StationPicker.
-- Check: Sé → Luz ≈ 3.4 min; Artur Alvim → Paraíso ≈ 35 min; Capão Redondo → Luz ≈ 51 min.
+## Web — where we stopped (Mon 21:31)
+**Done:** Pyodide routing in the browser; `usePyodide` returns `{ search, parseStatus }` (initial state `{search: null, parseStatus: null}`; Python `search(start, target, statuses)` rebuilds the graph with `statuses.to_py()` when present → **routing reroutes around stopped/reduced lines**, tested with fake AZUL Paralisada: Sé → Luz via VERMELHA → República → AMARELA); `useLineStatus(parseStatus)` (2nd custom hook: fetch `/api/status` → `parseStatus(html).toJs({ dict_converter: Object.fromEntries })`, effect deps `[parseStatus]`); StationPicker; RouteResult grouped by line via `lib/groupRoute.js`; "Rota indisponível" message when no route; LineStatusBadge (`{line, status}`, color from `LINE_COLORS`, text from `statusOf`) + LineStatusList (`{statuses}`, maps `Object.keys(LINE_COLORS)`, `statuses?.[line]`); MetroMap v2 (Fable) gets `route` + `statuses`; its status legend (MapLegend.jsx) removed by Claude — LineStatusList is the one status list.
+- **Status proxy (Claude):** `web/api/status.js` (Vercel function, 60 s edge cache) + Vite dev proxy in `vite.config.js` → same URL `/api/status` in dev and prod. Tested locally ✅.
+- **Commits:** ≥15 on feat/web (rubric ✅ once tonight's 2 are in).
+- **Components so far (6):** StationPicker, RouteResult, MetroMap, LineStatusBadge, LineStatusList (+ MapLegend removed). Need ≥8 → Header/Logo, SavedTrips components coming.
+- **Small pending:** click before Pyodide loads → `result` = text → `.toJs()` crash (fix: early `if (search === null) { setMessage(...); return }`); `./py` → `/py` in usePyodide; StationPicker default export still named StationSelector; time display `3:4` → pad seconds.
+- **Deploy (next):** Vercel → import repo → Root Directory `web` → "Include files outside the root directory" ON (sync reads ../python) → first deploy is a *preview* of feat/web; merge to main Tue for the production link. Test on Vercel: map loads, Sé → Luz (Pyodide in prod build — riskiest), status list real.
+- **MockAPI:** create project + `trips` resource (name, origin, destination) — 10 min, no code.
+- Lessons Mon: early return in handlers, two moments of a component (click vs drawing), JSX `? :` only, `null` draws nothing, `.toJs` placement, nested map, objects `{line, lines}`, Tailwind can't build dynamic classes → `style={{ backgroundColor }}`, `Object.keys`, `?.`, props names must match the tag's attributes, `() => ({...})` returns an object, `function` is reserved, `.to_py()` (JS → Python), effect deps `[x]`.
+- **Recurring slips:** name saved one way / used another; braces vs parentheses in arrows; unsaved files (turn on VS Code Auto Save); `.method()` attached after the setter's closing paren.
 
 ## Python core reference — `python/metro/`, no I/O
 - `travel_time.py`: a=1.1, b=1.2; OVERHEAD, HEADWAY per line; `SegmentTime(d, line, factor=1)`.
