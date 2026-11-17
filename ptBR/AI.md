@@ -89,6 +89,18 @@
 
 **Resposta:** a pedido, a IA fez o estilo visual com Tailwind: tema escuro, a marca "Detour" (fonte Parisienne), campos em pílula dividida com um botão redondo de busca em neon, um ícone próprio desenhado a partir do esboço do Raul (`StationIcon`), o botão de viagens salvas, um painel flutuante para a rota (para o mapa nunca se mexer), a linha do tempo da rota e a situação das linhas desenhada como uma linha de metrô com 18 nós. O Raul definiu o layout e o visual; a IA escreveu as classes e o markup, sem mudar a lógica dos componentes dele.
 
+### 14. CRUD de viagens salvas, guiado — 17/11/2026
+
+> created the trips resource nopw what i never used or even heard of this mockapi
+
+**Resposta:** uma explicação do MockAPI como uma tabela online acessada por URLs, depois quatro passos pequenos, cada um com um exemplo resolvido numa API de "notas" sem relação: ler (`GET`), criar (`POST`, `JSON.stringify`, `[...lista, item]`), renomear (`PUT /trips/:id`, `lista.map`) e excluir (`DELETE`, `lista.filter`). O Raul escreveu `services/tripsService.js` e `hooks/useSavedTrips.js`; as revisões pegaram uma função devolvida sem ser chamada (`response.json`), o atalho `{ newName }` mandando o campo com o nome errado e um `return (a, b)` que só devolvia `b`.
+
+### 15. Viagens salvas na tela — 17/11/2026
+
+> netx is the read and delete and update all inside the save bookmark you cna also do that
+
+**Resposta:** o Raul sugeriu tirar a origem e o destino da própria rota (a primeira e a última estação) em vez do texto digitado. A pedido, a IA fez as telas: um botão "Salvar viagem" no painel da rota (desativado como "Viagem salva" quando a mesma viagem já existe), o menu do marcador com contador, o `SavedTripItem` (buscar de novo com a situação de hoje, renomear na própria lista, excluir) e ícones de linha desenhados para as ações. A busca no `App` virou uma função com nome, `runSearch`, usada pelos campos e pelo menu.
+
 ## Aplicação no projeto
 
 | Item | Papel da IA |
@@ -106,6 +118,8 @@
 | `MetroMap` v1 (SVG) | Gerado (Claude) |
 | `MetroMap` v2 (Leaflet), `lib/mapGeometry.js`, `lib/lineStatus.js`, `MetroMap.css` | Gerado (Claude Fable, a pedido do Raul); legenda de situação removida depois pelo Claude |
 | `services/networkService.js` | Gerado |
+| `services/tripsService.js`, `hooks/useSavedTrips.js` (CRUD) | Guiado (escrito pelo Raul) |
+| Botão "Salvar viagem", lista do `SavedTripsMenu`, `SavedTripItem`, `icons/ActionIcons`, `runSearch` | Gerado a pedido (ideia da origem/destino pelo Raul) |
 | `api/status.js`, proxy de desenvolvimento do Vite | Gerado |
 | `Logo`, `SavedTripsMenu`, `icons/StationIcon` (do esboço do Raul), `icons/BookmarkIcon` | Gerado a pedido |
 | `python/metro/routing.py` — `Normalize`, `FindNodes`, `BestRoute` movidos de `main.py` | Movido a pedido |
@@ -115,6 +129,7 @@
 
 - **Mesmos resultados que a CLI:** no navegador, Sé → Luz = 206 s (3,4 min), igual ao `python/main.py`. Artur Alvim → Paraíso ≈ 35 min e Capão Redondo → Luz ≈ 51 min foram rodados de novo depois de mover as funções.
 - **Situação na rota:** com um "Paralisada" falso na Linha 1, Sé → Luz passou para Linha 3 → República → Linha 4, o caminho que um passageiro faria na vida real.
+- **CRUD:** um ciclo completo no MockAPI, conferido no app e no painel do próprio MockAPI: salvar Sé → Luz, o botão muda para "Viagem salva", renomear, buscar de novo pelo menu, excluir.
 - **Casos de borda:** uma estação inexistente ("xyz") mostra "Rota indisponível" em vez de quebrar; clicar antes do Pyodide terminar de carregar mostra uma mensagem de carregamento.
 - **Produção:** cada correção foi conferida no link da Vercel, não só localmente (página em branco, 404 do Pyodide, mapa, lista de situação).
 - **Modelo vs. realidade:** comparado com viagens reais — viagens numa linha só batem; viagens com baldeação saem curtas (veja as limitações).

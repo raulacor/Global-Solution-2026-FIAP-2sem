@@ -7,7 +7,7 @@ export default function Logo({ onReset }) {
       type="button"
       onClick={onReset}
       aria-label="Detour — nova busca"
-      className="group shrink-0 cursor-pointer select-none px-1 font-logo text-4xl leading-none text-white
+      className="group flex h-12 shrink-0 cursor-pointer select-none items-center px-1 pt-1.5 font-logo text-4xl leading-none text-white
                  transition-colors duration-300 hover:text-[#00f0ff]
                  [text-shadow:0_0_1px_rgba(255,255,255,0.4)]
                  hover:[text-shadow:0_0_6px_rgba(0,240,255,0.9),0_0_18px_rgba(0,240,255,0.45)]

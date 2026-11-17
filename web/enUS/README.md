@@ -19,7 +19,7 @@ The routing is not a JavaScript copy: the same Python package the CLI uses (`../
 - **Status-aware routing** — the current status is sent to the routing on every search (stopped line → its tracks are removed; reduced speed → cruise speed × 0.5).
 - **Interactive map** — the network over a dark map of São Paulo (Leaflet), lines animated by status, the selected route highlighted with its stations named.
 - **Unknown station / still loading** — clear messages instead of errors.
-- **Saved trips (CRUD)** — _in progress: MockAPI + `useSavedTrips`._
+- **Saved trips (CRUD)** — save the route on screen ("Salvar viagem"; the same origin → destination is never saved twice), list the saved trips from the bookmark menu, search one again with **today's** line status, rename it inline, delete it. Stored on [MockAPI](https://mockapi.io) (`GET`, `POST`, `PUT`, `DELETE /trips`).
 
 ## How it works
 
@@ -28,7 +28,8 @@ Browser
  ├─ usePyodide ─ loads Pyodide + python/metro + network.json, builds the graph,
  │               exposes search(origin, destination, statuses) and parseStatus(html)
  ├─ useLineStatus(parseStatus) ─ GET /api/status → parseStatus(html) → { LINE: {status, info} }
- └─ App ─ StationPicker → search(...) → RouteResult + MetroMap
+ ├─ useSavedTrips ─ tripsService → MockAPI /trips (GET list · POST save · PUT rename · DELETE)
+ └─ App ─ StationPicker / SavedTripsMenu → runSearch → search(...) → RouteResult + MetroMap
                          statuses ─────→ LineStatusList + MetroMap + search
 
 /api/status ─ Vercel serverless function (api/status.js): fetches the Direto do Metrô page
@@ -47,7 +48,7 @@ web/
 │   ├── components/          presentation only
 │   ├── hooks/               state + side effects (usePyodide, useLineStatus)
 │   ├── lib/                 pure logic, no React (groupRoute, lineStatus, mapGeometry)
-│   └── services/            data access (networkService)
+│   └── services/            data access (networkService, tripsService → MockAPI)
 └── vite.config.js           React + Tailwind plugins, dev proxy for /api/status
 ```
 
@@ -57,12 +58,13 @@ web/
 |---|---|
 | `Logo` | "Detour" wordmark button (clears the search) |
 | `StationPicker` | origin / destination fields with the round search button |
-| `StationIcon`, `BookmarkIcon` | custom SVG icons (inherit the text color) |
-| `RouteResult` | route timeline: time, transfers, stations per line |
+| `StationIcon`, `BookmarkIcon`, `ActionIcons` | custom SVG icons (inherit the text color) |
+| `RouteResult` | route timeline: time, transfers, stations per line, "Salvar viagem" button |
 | `MetroMap` | Leaflet map of the network, status animations, route highlight |
 | `LineStatusList` | the 18-node status line |
 | `LineStatusBadge` | one line's stretch (3 nodes) and its situation |
-| `SavedTripsMenu` | saved trips menu button (list coming with the CRUD) |
+| `SavedTripsMenu` | bookmark button with a counter; opens the saved trips list |
+| `SavedTripItem` | one saved trip: search again, rename inline, delete |
 
 ### Custom hooks
 
@@ -70,6 +72,7 @@ web/
 |---|---|
 | `usePyodide` | loads Python in the browser once; returns `{ search, parseStatus }` (both `null` while loading) |
 | `useLineStatus` | fetches `/api/status` and parses it with the Python parser; re-runs when `parseStatus` becomes available |
+| `useSavedTrips` | saved trips from MockAPI; returns `{ trips, addTrip, renameTrip, deleteTrip }` and keeps the list in sync after each call |
 
 ## Prerequisites
 
@@ -91,7 +94,7 @@ After changing anything in `../python/`, restart `npm run dev` so the copy is re
 
 ## Stack
 
-React 19 · Vite 8 · Tailwind CSS v4 · Pyodide · Leaflet · Vercel (hosting + serverless function) · oxlint
+React 19 · Vite 8 · Tailwind CSS v4 · Pyodide · Leaflet · MockAPI (saved trips) · Vercel (hosting + serverless function) · oxlint
 
 ## Deployment
 

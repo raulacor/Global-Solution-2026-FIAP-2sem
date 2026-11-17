@@ -19,7 +19,7 @@ O cálculo da rota não é uma cópia em JavaScript: o mesmo pacote Python que a
 - **Rota que considera a situação** — a situação atual vai junto em cada busca (linha paralisada → seus trilhos saem do grafo; velocidade reduzida → velocidade de cruzeiro × 0,5).
 - **Mapa interativo** — a rede sobre um mapa escuro de São Paulo (Leaflet), linhas animadas pela situação, rota escolhida em destaque com os nomes das estações.
 - **Estação inexistente / ainda carregando** — mensagens claras em vez de erros.
-- **Viagens salvas (CRUD)** — _em andamento: MockAPI + `useSavedTrips`._
+- **Viagens salvas (CRUD)** — salvar a rota da tela ("Salvar viagem"; a mesma origem → destino nunca é salva duas vezes), listar as viagens salvas no menu do marcador, buscar uma de novo com a situação **de hoje**, renomear direto na lista e excluir. Guardadas no [MockAPI](https://mockapi.io) (`GET`, `POST`, `PUT`, `DELETE /trips`).
 
 ## Como funciona
 
@@ -28,7 +28,8 @@ Navegador
  ├─ usePyodide ─ carrega o Pyodide + python/metro + network.json, monta o grafo,
  │               expõe search(origem, destino, statuses) e parseStatus(html)
  ├─ useLineStatus(parseStatus) ─ GET /api/status → parseStatus(html) → { LINHA: {status, info} }
- └─ App ─ StationPicker → search(...) → RouteResult + MetroMap
+ ├─ useSavedTrips ─ tripsService → MockAPI /trips (GET lista · POST salva · PUT renomeia · DELETE)
+ └─ App ─ StationPicker / SavedTripsMenu → runSearch → search(...) → RouteResult + MetroMap
                          statuses ─────→ LineStatusList + MetroMap + search
 
 /api/status ─ função serverless da Vercel (api/status.js): busca a página do Direto do Metrô
@@ -47,7 +48,7 @@ web/
 │   ├── components/          só apresentação
 │   ├── hooks/               estado + efeitos (usePyodide, useLineStatus)
 │   ├── lib/                 lógica pura, sem React (groupRoute, lineStatus, mapGeometry)
-│   └── services/            acesso a dados (networkService)
+│   └── services/            acesso a dados (networkService, tripsService → MockAPI)
 └── vite.config.js           plugins React + Tailwind, proxy de dev para /api/status
 ```
 
@@ -57,12 +58,13 @@ web/
 |---|---|
 | `Logo` | botão com a marca "Detour" (limpa a busca) |
 | `StationPicker` | campos de origem / destino com o botão redondo de busca |
-| `StationIcon`, `BookmarkIcon` | ícones SVG próprios (herdam a cor do texto) |
-| `RouteResult` | linha do tempo da rota: tempo, baldeações, estações por linha |
+| `StationIcon`, `BookmarkIcon`, `ActionIcons` | ícones SVG próprios (herdam a cor do texto) |
+| `RouteResult` | linha do tempo da rota: tempo, baldeações, estações por linha, botão "Salvar viagem" |
 | `MetroMap` | mapa Leaflet da rede, animações por situação, destaque da rota |
 | `LineStatusList` | a linha de situação com 18 nós |
 | `LineStatusBadge` | o trecho de uma linha (3 nós) e sua situação |
-| `SavedTripsMenu` | botão do menu de viagens salvas (a lista vem com o CRUD) |
+| `SavedTripsMenu` | botão do marcador com contador; abre a lista de viagens salvas |
+| `SavedTripItem` | uma viagem salva: buscar de novo, renomear, excluir |
 
 ### Hooks próprios
 
@@ -70,6 +72,7 @@ web/
 |---|---|
 | `usePyodide` | carrega o Python no navegador uma vez; devolve `{ search, parseStatus }` (os dois `null` enquanto carrega) |
 | `useLineStatus` | busca `/api/status` e interpreta com o parser em Python; roda de novo quando `parseStatus` fica disponível |
+| `useSavedTrips` | viagens salvas no MockAPI; devolve `{ trips, addTrip, renameTrip, deleteTrip }` e mantém a lista em dia depois de cada chamada |
 
 ## Pré-requisitos
 
@@ -91,7 +94,7 @@ Depois de mudar algo em `../python/`, reinicie o `npm run dev` para a cópia ser
 
 ## Tecnologias
 
-React 19 · Vite 8 · Tailwind CSS v4 · Pyodide · Leaflet · Vercel (hospedagem + função serverless) · oxlint
+React 19 · Vite 8 · Tailwind CSS v4 · Pyodide · Leaflet · MockAPI (viagens salvas) · Vercel (hospedagem + função serverless) · oxlint
 
 ## Deploy
 

@@ -37,7 +37,7 @@ function App() {
 
   return (
     <>
-    <header className="sticky top-0 z-[1100] flex items-start justify-between gap-5 border-b border-white/10 bg-slate-900/90 px-6 py-3 text-white backdrop-blur-md">
+    <header className="sticky top-0 z-[1100] flex items-center justify-between gap-5 border-b border-white/10 bg-slate-900/90 px-6 py-3 text-white backdrop-blur-md">
       <Logo onReset={() => { setRoute(null); setMessage(null) }} />
       <div className="relative flex flex-1 flex-col items-center">
         <StationPicker onSearch={runSearch} />

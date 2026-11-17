@@ -89,6 +89,18 @@
 
 **Response:** on request, the AI did the visual styling with Tailwind: dark theme, the "Detour" wordmark (Parisienne font), split pill inputs with a round neon search button, a custom icon drawn from Raul's sketch (`StationIcon`), the saved-trips button, a floating route panel (so the map never moves), the route timeline and the line status drawn as one 18-node metro line. Raul defined the layout and the look; the AI wrote the classes and markup, keeping his component logic unchanged.
 
+### 14. Saved trips CRUD, guided — 2026-11-17
+
+> created the trips resource nopw what i never used or even heard of this mockapi
+
+**Response:** an explanation of MockAPI as an online table spoken to through URLs, then four small steps, each with a worked example on an unrelated "notes" API: read (`GET`), create (`POST`, `JSON.stringify`, `[...list, item]`), rename (`PUT /trips/:id`, `list.map`) and delete (`DELETE`, `list.filter`). Raul wrote `services/tripsService.js` and `hooks/useSavedTrips.js`; the reviews caught a function returned without being called (`response.json`), the shorthand `{ newName }` sending the wrong field name, and a `return (a, b)` that only returned `b`.
+
+### 15. Saved trips on screen — 2026-11-17
+
+> netx is the read and delete and update all inside the save bookmark you cna also do that
+
+**Response:** Raul suggested taking the origin and destination from the route itself (its first and last station) instead of the typed text. On request, the AI built the screens: a "Salvar viagem" button on the route panel (disabled as "Viagem salva" when the same trip already exists), the bookmark menu with a counter, `SavedTripItem` (search again with today's status, rename inline, delete) and line icons drawn for the actions. The search handler in `App` became a named `runSearch`, shared by the fields and the menu.
+
 ## Use in the project
 
 | Item | AI's role |
@@ -106,6 +118,8 @@
 | `MetroMap` v1 (SVG) | Generated (Claude) |
 | `MetroMap` v2 (Leaflet), `lib/mapGeometry.js`, `lib/lineStatus.js`, `MetroMap.css` | Generated (Claude Fable, requested by Raul); status legend later removed by Claude |
 | `services/networkService.js` | Generated |
+| `services/tripsService.js`, `hooks/useSavedTrips.js` (CRUD) | Guided (written by Raul) |
+| "Salvar viagem" button, `SavedTripsMenu` list, `SavedTripItem`, `icons/ActionIcons`, `runSearch` | Generated on request (origin/destination idea by Raul) |
 | `api/status.js`, Vite dev proxy | Generated |
 | `Logo`, `SavedTripsMenu`, `icons/StationIcon` (from Raul's sketch), `icons/BookmarkIcon` | Generated on request |
 | `python/metro/routing.py` — `Normalize`, `FindNodes`, `BestRoute` moved from `main.py` | Moved on request |
@@ -115,6 +129,7 @@
 
 - **Same results as the CLI:** in the browser, Sé → Luz = 206 s (3.4 min), the same as `python/main.py`. Artur Alvim → Paraíso ≈ 35 min and Capão Redondo → Luz ≈ 51 min were re-run after moving the helpers.
 - **Status in the routing:** with a fake "Paralisada" on Line 1, Sé → Luz switched to Line 3 → República → Line 4, the route a rider would take in real life.
+- **CRUD:** a full cycle on MockAPI, checked both in the app and on MockAPI's own dashboard: save Sé → Luz, the button changes to "Viagem salva", rename it, search it again from the menu, delete it.
 - **Edge cases:** an unknown station ("xyz") shows "Rota indisponível" instead of crashing; clicking before Pyodide finishes loading shows a loading message.
 - **Production:** each fix was checked on the Vercel link, not only locally (blank page, Pyodide 404, map, status list).
 - **Model vs. reality:** compared against real trips — single-line trips match; trips with a transfer come out short (see limitations).
