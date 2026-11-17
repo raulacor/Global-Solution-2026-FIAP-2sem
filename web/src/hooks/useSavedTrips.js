@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import { getTrips } from '../services/tripsService'
+import { getTrips, createTrip } from '../services/tripsService'
+
 
 export default function useSavedTrips() {
     const [trips, setTrips] = useState([])
@@ -12,5 +13,11 @@ export default function useSavedTrips() {
         }
         load()
     }, [])
-    return {trips}
+
+    async function addTrip(trip) {
+        const isSaved = await createTrip(trip)
+        setTrips([...trips, isSaved])
+    }
+    return {trips, addTrip}
 }
+
