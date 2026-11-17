@@ -8,15 +8,18 @@ import useLineStatus from "./hooks/useLineStatus"
 import LineStatusList from "./components/LineStatusList/LineStatusList"
 import Logo from "./components/Logo/Logo"
 import SavedTripsMenu from "./components/SavedTripsMenu/SavedTripsMenu"
+import useSavedTrips from "./hooks/useSavedTrips"
 
 function App() {
   const { search, parseStatus } = useSearch()
   const [route, setRoute] = useState(null)
   const [message, setMessage] = useState(null)
   const statuses = useLineStatus(parseStatus)
+  const trips = useSavedTrips()
 
   return (
     <>
+    {console.log(trips)}
     <header className="sticky top-0 z-[1100] flex items-start justify-between gap-5 border-b border-white/10 bg-slate-900/90 px-6 py-3 text-white backdrop-blur-md">
       <Logo onReset={() => { setRoute(null); setMessage(null) }} />
       <div className="relative flex flex-1 flex-col items-center">
