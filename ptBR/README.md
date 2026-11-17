@@ -11,12 +11,12 @@
 | **Nome da CitizenTech** | **Detour** — o app que ajuda você a encontrar o melhor caminho pelo metrô |
 | **Cidade e bairro** | São Paulo — rede do Metrô |
 | **Cidadão beneficiado** | Passageiro que depende do metrô no dia a dia |
-| **Problema, em uma frase** | _a definir_ |
+| **Problema, em uma frase** | Quando uma linha do metrô fica lenta ou para, o passageiro só descobre na plataforma e perde tempo esperando em vez de pegar um caminho melhor |
 | **Como funciona** | Mapa da rede do metrô com a situação real das linhas; o usuário escolhe origem e destino e vê a rota mais rápida desenhada no mapa |
 | **O que cada parte faz** | Ver [Estrutura do repositório](#estrutura-do-repositório) |
 | **Link do repositório** | [https://github.com/raulacor/Global-Solution-2026-FIAP-2sem](https://github.com/raulacor/Global-Solution-2026-FIAP-2sem) (privado) |
-| **Indicador de impacto** | _a definir_ |
-| **ODS conectados** | _a definir_ |
+| **Indicador de impacto** | Minutos economizados por viagem — o tempo da rota com a situação real das linhas comparado com a rota que a ignora, nos dias em que uma linha tem problema |
+| **ODS conectados** | ODS 11 — Cidades e Comunidades Sustentáveis (meta 11.2, transporte público acessível) · ODS 9 — Indústria, Inovação e Infraestrutura |
 
 **Dados:** somente dados reais e públicos.
 - Estações e traçados: GeoSampa (Prefeitura de São Paulo), versão de 26/11/2024

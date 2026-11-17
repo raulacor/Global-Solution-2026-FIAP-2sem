@@ -41,7 +41,7 @@
 - **Small pending:** click before Pyodide loads → `result` = text → `.toJs()` crash (fix: early `if (search === null) { setMessage(...); return }`); `./py` → `/py` in usePyodide; StationPicker default export still named StationSelector; time display `3:4` → pad seconds.
 - **DEPLOYED ✅ (Mon 22:08): https://detour-rust.vercel.app** (production = main, auto-redeploys on every merge to main; work continues on feat/web → PR → main). Pyodide runtime now served from `/pyodide/` (sync script copies node_modules/pyodide → public/pyodide, gitignored; `loadPyodide({ indexURL: '/pyodide/' })`) — without it prod 404'd on python_stdlib.zip.
 - **Deploy notes (old):** Vercel → import repo → Root Directory `web` → "Include files outside the root directory" ON (sync reads ../python) → first deploy is a *preview* of feat/web; merge to main Tue for the production link. Test on Vercel: map loads, Sé → Luz (Pyodide in prod build — riskiest), status list real.
-- **MockAPI:** create project + `trips` resource (name, origin, destination) — 10 min, no code.
+- **MockAPI created (Tue 00:43):** project `detour`, resource `trips` → **https://6afbccb1892984c4494a5896.mockapi.io/api/v1/trips** (prefix /api/v1). Check schema = id + name, origin, destination (String); set generated rows to 0. Next: `useSavedTrips` (GET/POST/PUT/DELETE with fetch `method` + `body`, JSON headers) + saved-trips dropdown in SavedTripsMenu.
 - Lessons Mon: early return in handlers, two moments of a component (click vs drawing), JSX `? :` only, `null` draws nothing, `.toJs` placement, nested map, objects `{line, lines}`, Tailwind can't build dynamic classes → `style={{ backgroundColor }}`, `Object.keys`, `?.`, props names must match the tag's attributes, `() => ({...})` returns an object, `function` is reserved, `.to_py()` (JS → Python), effect deps `[x]`.
 - **Recurring slips:** name saved one way / used another; braces vs parentheses in arrows; unsaved files (turn on VS Code Auto Save); `.method()` attached after the setter's closing paren.
 
@@ -56,6 +56,16 @@
 
 ## Web rubric checklist
 React (Vite) + Tailwind, ≥8 components, useState + useEffect, ≥2 custom hooks, logic separated from presentation, external API with full CRUD, ≥15 meaningful commits, Vercel deploy (Root = `web`), ZIP, README, AI.md, private repo with professors' write access. Staying in JavaScript (no TS).
+
+## Brand decisions (Raul, Tue 00:50)
+1. Problem/solution (his words): "Detour allows the commuter to proactively find a better way to his destination instead of just waiting for life to catch on" — this is the *solution*; proposed *problem* sentence: "When a metro line slows down or stops, commuters only find out on the platform and lose time waiting instead of taking a better way."
+2. Impact indicator: minutes saved per trip (computable: route with live status vs. route ignoring it, when a line has a problem).
+3. SDGs: 11 (target 11.2, public transport) + 9 — agreed.
+4. Archetype: Explorer (primary) + Sage (secondary).
+5. Mission (his words): "Detour is for people who don't like commuting, for people who want to get to their destination as fast as possible."
+6. Vision: be recognized by the official subway channels.
+7. Values: simplicity, usefulness, time-saving.
+Problem sentence OK by Raul; root README CitizenTech sheet filled (EN/ptBR/enUS) Tue 00:55.
 
 ## Raul's UI vision (Mon 11:13)
 - **Header/navbar:** [Logo button] — [Origin input] [Destination input] [Search] — [Saved trips dropdown].

@@ -11,12 +11,12 @@
 | **CitizenTech name** | **Detour** — the app that helps you find the best way around the subway |
 | **City and neighborhood** | São Paulo — Metro network |
 | **Citizen served** | Commuters who depend on the metro every day |
-| **Problem, in one sentence** | _TBD_ |
+| **Problem, in one sentence** | When a metro line slows down or stops, commuters only find out on the platform and lose time waiting instead of taking a better way |
 | **How it works** | A map of the metro network showing each line's real operating status; the user picks an origin and a destination and sees the fastest route drawn on the map |
 | **What each part does** | See [Repository structure](#repository-structure) |
 | **Repository link** | [https://github.com/raulacor/Global-Solution-2026-FIAP-2sem](https://github.com/raulacor/Global-Solution-2026-FIAP-2sem) (private) |
-| **Impact indicator** | _TBD_ |
-| **Connected SDGs** | _TBD_ |
+| **Impact indicator** | Minutes saved per trip — the route's time with the live line status compared with the route that ignores it, on days a line has a problem |
+| **Connected SDGs** | SDG 11 — Sustainable Cities and Communities (target 11.2, accessible public transport) · SDG 9 — Industry, Innovation and Infrastructure |
 
 **Data:** real, public data only.
 - Stations and tracks: GeoSampa (Prefeitura de São Paulo), snapshot of 2024-11-26
