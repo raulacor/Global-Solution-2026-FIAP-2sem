@@ -10,6 +10,7 @@ pnpm-debug.log*
 
 # Cópia gerada dos módulos Python para o Pyodide (ver web/scripts/sync-python.mjs)
 web/public/py/
+web/public/pyodide/
 
 # --- Python ---
 __pycache__/

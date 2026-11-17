@@ -9,7 +9,7 @@ export default function usePython() {
     
     useEffect(() => {
         async function load() {
-            const pyodide = await loadPyodide()
+            const pyodide = await loadPyodide({ indexURL: '/pyodide/' })
             pyodide.FS.mkdir('metro')
             pyodide.FS.writeFile('metro/__init__.py', '')
 
